@@ -1,0 +1,10 @@
+{
+  "name": "SponsorMe",
+  "version": "1.0.0",
+  "description": "sp",
+  "main": "index.js",
+  "repository": "https://github.com/adujoseph/SponsorMe.git",
+  "author": "Adujoseph <adujosephayo@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
