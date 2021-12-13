@@ -37,6 +37,7 @@ const Home = () => {
       description,
       address,
     };
+    alert(JSON.stringify(payload));
     //deploy with payload
     handleClose();
   };
