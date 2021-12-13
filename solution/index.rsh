@@ -1,79 +1,139 @@
 'reach 0.1';
-
-const announcement = Bytes(28);
-const product = Object({ name: Bytes(10), unit: Bytes(6), units: Bytes(8), price: UInt })
-const products = Array(product, 3);
+const projectName = Bytes(28);
+const projectDetails = Bytes(28);
+const fundraisingGoal = UInt;
 
 const commonInteract = {
   reportPayment: Fun([UInt], Null),
   reportTransfer: Fun([UInt], Null),
+  reportExit: Fun([], Null),
   reportCancellation: Fun([], Null),
-  reportFulfillment: Fun([product, UInt], Null),
-  reportExit: Fun([], Null)
+  reportTokenMinted: Fun(true, Null),
+  didTransfer: Fun([Bool, UInt], Null),
+  programEnded: Fun([], Null)
 };
 
-const sellerInteract = {
+const projectOwnerInteract = {
   ...commonInteract,
-  sellerInfo: Object({ announcement: announcement, products: products }),
-  reportReady: Fun([], Null)
+  projectInfo: Object({projectName: projectName, projectDetails: projectDetails, fundraisingGoal: fundraisingGoal}),
+  reportReady: Fun([], Null),
+  getParams: Fun([], Object({
+    name: Bytes(32), symbol: Bytes(8),
+    url: Bytes(96), metadata: Bytes(32),
+    supply: UInt,
+    amt: UInt,
+  })),
 };
 
-const buyerInteract = {
+const sponsorInteract = {
   ...commonInteract,
-  shop: Fun(
-    [Object({ announcement: announcement, products: products })],
-    Object({ prodNum: UInt, prodAmt: UInt })
+  sponsor: Fun(
+    [Object({projectName: projectName, projectDetails: projectDetails, fundraisingGoal: fundraisingGoal})],
+    Object({ contribute: Bool, amt: UInt })
   ),
-  confirmPurchase: Fun([UInt], Bool)
+  // confirmAgreeToSponsor: Fun([UInt], Bool),
 };
 
 export const main = Reach.App(() => {
-  const S = Participant('Seller', sellerInteract);
-  const B = Participant('Buyer', buyerInteract);
-  const V = View('Main', { sellerInfo: Object({ announcement: announcement, products: products }) });
-  deploy();
+  const PO = Participant('ProjectOwner', projectOwnerInteract);
+  const S = Participant('Sponsor', sponsorInteract);
+  deploy(); // deploy function takes you to the Step mode
 
-  S.only(() => { const sellerInfo = declassify(interact.sellerInfo); });
-  S.publish(sellerInfo);
-  S.interact.reportReady();
-  V.sellerInfo.set(sellerInfo);
+
+  PO.only(() => { const projectInfo = declassify(interact.projectInfo); });
+  PO.publish(projectInfo);
+  
+  PO.interact.reportReady();
+
   commit();
 
-  B.only(() => { const order = declassify(interact.shop(sellerInfo)); });
-  B.publish(order);
 
-  if (order.prodNum == 0 || order.prodNum > sellerInfo.products.length || order.prodAmt == 0) {
+  S.only(() => { const sponsor = declassify(interact.sponsor(projectInfo)); }); 
+  S.publish(sponsor);
+  if (sponsor.contribute == false) {
     commit();
-    each([S, B], () => interact.reportCancellation());
-    each([S, B], () => interact.reportExit());
+    each([S, PO], () => interact.reportCancellation());
+    each([S, PO], () => interact.reportExit());
     exit();
   } else {
     commit();
   }
 
-  S.only(() => { const total = sellerInfo.products[order.prodNum - 1].price * order.prodAmt; });
-  S.publish(total);
+
+  PO.only(() => { const fund = projectInfo.fundraisingGoal; });
+
+  PO.publish(fund);
+
   commit();
 
-  B.only(() => { const willBuy = declassify(interact.confirmPurchase(total)); });
-  B.publish(willBuy);
+  // S.only(() => { const willFund = declassify(interact.confirmAgreeToSponsor(fund)); });
+  // S.publish(willFund);
+  // if (!willFund) {
+  //   commit();
+  //   each([S, PO], () => interact.reportCancellation());
+  //   each([S, PO], () => interact.reportExit());
+  //   exit();
+  // } else {
+  // commit();
+  // }
 
-  if (!willBuy) {
-    commit();
-    each([S, B], () => interact.reportCancellation());
-    each([S, B], () => interact.reportExit());
-    exit();
+
+  S.pay(fund);
+  // transfer(fund).to(PO);
+  each([PO, S], () => interact.reportPayment(fund));
+  transfer(fund).to(PO);
+  each([PO, S], () => interact.reportTransfer(fund));
+  commit();
+// Get token details and mint
+  PO.only(() => {const { name, symbol, url, metadata, supply, amt } = declassify(interact.getParams());
+});
+  
+  PO.publish(name, symbol, url, metadata, supply, amt);
+  const md1 = {name, symbol, url, metadata, supply};
+  // Minting token here
+  const tok1 = new Token(md1);
+  PO.interact.reportTokenMinted(tok1, md1);
+  commit();
+
+  S.publish();
+  S.interact.reportTokenMinted(tok1, md1);
+  commit();
+// Todo: Add if statement for gradual release of funds...
+const doTransfer1 = (who, tokX) => {
+  if (who == PO && balance(tokX) >= ((40* supply)/100)){
+    transfer((40 * supply)/100, tokX).to(who);
+    who.interact.didTransfer(true, (40 * supply)/100);
   } else {
-    commit();
+      if( balance(tokX) >= ((40* supply)/100)){
+    transfer((40 * supply)/100, tokX).to(who);
+    who.interact.didTransfer(true, (40 * supply)/100);
+      }
   }
-
-  B.pay(total);
-  each([S, B], () => interact.reportPayment(total));
-  transfer(total).to(S);
-  each([S, B], () => interact.reportTransfer(total));
-  each([S, B], () => interact.reportFulfillment(sellerInfo.products[order.prodNum - 1], order.prodAmt));
+};
+  
+  S.publish();
+  doTransfer1(S, tok1);
+  commit();
+  PO.publish();
+  doTransfer1(PO, tok1);
   commit();
 
-  each([S, B], () => interact.reportExit());
+ S.publish();
+ transfer(balance(tok1), tok1).to(PO);
+ each([PO, S], () => interact.programEnded());
+var [] = []
+invariant (true)
+while(true ){
+    commit();
+    S.publish();
+    continue;
+ }
+ tok1.burn(supply)
+ tok1.destroy();
+  commit();
+
+
+
+  each([PO, S], () => interact.reportExit());
   exit();
 });

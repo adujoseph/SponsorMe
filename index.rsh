@@ -10,6 +10,7 @@ const commonInteract = {
   reportCancellation: Fun([], Null),
   reportTokenMinted: Fun(true, Null),
   didTransfer: Fun([Bool, UInt], Null),
+  programEnded: Fun([], Null)
 };
 
 const projectOwnerInteract = {
@@ -30,7 +31,7 @@ const sponsorInteract = {
     [Object({projectName: projectName, projectDetails: projectDetails, fundraisingGoal: fundraisingGoal})],
     Object({ contribute: Bool, amt: UInt })
   ),
-  confirmAgreeToSponsor: Fun([UInt], Bool),
+  // confirmAgreeToSponsor: Fun([UInt], Bool),
 };
 
 export const main = Reach.App(() => {
@@ -65,16 +66,16 @@ export const main = Reach.App(() => {
 
   commit();
 
-  S.only(() => { const willFund = declassify(interact.confirmAgreeToSponsor(fund)); });
-  S.publish(willFund);
-  if (!willFund) {
-    commit();
-    each([S, PO], () => interact.reportCancellation());
-    each([S, PO], () => interact.reportExit());
-    exit();
-  } else {
-  commit();
-  }
+  // S.only(() => { const willFund = declassify(interact.confirmAgreeToSponsor(fund)); });
+  // S.publish(willFund);
+  // if (!willFund) {
+  //   commit();
+  //   each([S, PO], () => interact.reportCancellation());
+  //   each([S, PO], () => interact.reportExit());
+  //   exit();
+  // } else {
+  // commit();
+  // }
 
 
   S.pay(fund);
@@ -85,14 +86,9 @@ export const main = Reach.App(() => {
   commit();
 // Get token details and mint
   PO.only(() => {const { name, symbol, url, metadata, supply, amt } = declassify(interact.getParams());
-  assume(4 * amt <= supply);
-  assume(4 * amt <= UInt.max);
 });
   
   PO.publish(name, symbol, url, metadata, supply, amt);
-  require(4 * amt <= supply);
-  require(4 * amt <= UInt.max);
-
   const md1 = {name, symbol, url, metadata, supply};
   // Minting token here
   const tok1 = new Token(md1);
@@ -104,12 +100,14 @@ export const main = Reach.App(() => {
   commit();
 // Todo: Add if statement for gradual release of funds...
 const doTransfer1 = (who, tokX) => {
-  if (who == PO){
-    transfer(2 * amt, tokX).to(who);
-    who.interact.didTransfer(true, amt);
+  if (who == PO && balance(tokX) >= ((40* supply)/100)){
+    transfer((40 * supply)/100, tokX).to(who);
+    who.interact.didTransfer(true, (40 * supply)/100);
   } else {
-  transfer(2 * amt, tokX).to(who);
-  who.interact.didTransfer(true, amt);
+      if( balance(tokX) >= ((40* supply)/100)){
+    transfer((40 * supply)/100, tokX).to(who);
+    who.interact.didTransfer(true, (40 * supply)/100);
+      }
   }
 };
   
@@ -119,13 +117,22 @@ const doTransfer1 = (who, tokX) => {
   PO.publish();
   doTransfer1(PO, tok1);
   commit();
-  PO.pay([[2*amt, tok1]]);
-  commit();
-  S.pay([[2*amt, tok1]]);
-  tok1.burn(supply);
-  tok1.destroy();
 
+ S.publish();
+ transfer(balance(tok1), tok1).to(PO);
+ each([PO, S], () => interact.programEnded());
+var [] = []
+invariant (true)
+while(true ){
+    commit();
+    S.publish();
+    continue;
+ }
+ tok1.burn(supply)
+ tok1.destroy();
   commit();
+
+
 
   each([PO, S], () => interact.reportExit());
   exit();

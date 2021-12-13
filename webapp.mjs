@@ -63,17 +63,17 @@ document.getElementById('devnets').addEventListener('change', (event) => {
     await showBalance('buyer', sponsorAcc);
   })();
 
-  document.getElementById('seller-balance').value = '';
-  document.getElementById('seller-contract-info').value = '';
-  document.getElementById('seller-log').innerHTML = '';
+  document.getElementById('project-balance').value = '';
+  document.getElementById('project-contract-info').value = '';
+  document.getElementById('project-log').innerHTML = '';
 
-  document.getElementById('buyer-balance').value = '';
-  document.getElementById('products').innerHTML = '';
-  document.getElementById('quantities').innerHTML = '';
-  document.getElementById('price').value = '';
-  document.getElementById('buyer-log').innerHTML = '';
+  document.getElementById('sponsor-balance').value = '';
+  document.getElementById('avalable-projects').innerHTML = '';
+//   document.getElementById('quantities').innerHTML = '';
+//   document.getElementById('price').value = '';
+  document.getElementById('sponsor-log').innerHTML = '';
 
-  document.querySelectorAll('input.unit').forEach((el) => { el.value = suStr; });
+//   document.querySelectorAll('input.unit').forEach((el) => { el.value = suStr; });
   enableBtn('deploy-btn');
 });
 
@@ -82,13 +82,11 @@ document.getElementById('deploy-btn').addEventListener('click', (event) => {
   (async () => {
     const sellerInteract = {
       ...commonInteract('seller'),
-      sellerInfo: {
-        announcement: 'List of products for sale:',
-        products: [
-          { name: 'Potatoes', unit: 'bag', units: 'bags', price: toAU(200) },
-          { name: 'Carrots', unit: 'bunch', units: 'bunches', price: toAU(100) },
-          { name: 'Corn', unit: 'ear', units: 'ears', price: toAU(50) }
-        ]
+      projectInfo: {
+        projectName: 'Project Sponsorship Project',
+        projectDetails: 'Solving Niger wahala',
+        fundraisingGoal: toAU(20),
+        contractDuration: 200,
       },
       reportReady: async () => {
         document.getElementById('seller-contract-info').value = JSON.stringify(await sellerCtc.getInfo());
