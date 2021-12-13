@@ -3,10 +3,10 @@ import * as backend from '/build/index.main.mjs';
 let stdlib = null;
 let suStr = null;
 let iBalance = null;
-let sellerAcc = null;
-let buyerAcc = null;
-let sellerCtc = null;
-let buyerCtc = null;
+let projectOwnerAcc = null;
+let sponsorAcc = null;
+let projectOwnerCtc = null;
+let sponsorCtc = null;
 
 const modal = new bootstrap.Modal(document.getElementById('confirm-modal'), { backdrop: false })
 
@@ -40,16 +40,13 @@ const showBalance = async (role, acc) => {
 };
 
 const commonInteract = (role) => ({
-  reportPayment: (payment) => writeLog(role, `${role == 'buyer' ? 'You' : 'The buyer'} paid ${toSU(payment)} ${suStr} to the contract.`),
-  reportTransfer: (payment) => writeLog(role, `The contract paid ${toSU(payment)} ${suStr} to ${role == 'seller' ? 'you' : 'the seller'}.`),
-  reportCancellation: () => { writeLog(role, `${role == 'buyer' ? 'You' : 'The buyer'} cancelled the order.`); },
-  reportFulfillment: (p, amt) => {
-    const subjectVerb = role == 'seller' ? 'You owe' : 'The seller owes';
-    const directObject = role == 'buyer' ? 'you' : 'the buyer';
-    writeLog(role, `${subjectVerb} ${directObject} ${amt} ${amt == 1 ? p.unit : p.units} of ${p.name}.`);
-  },
-  reportExit: () => writeLog(role, `Exiting contract.`)
-});
+    reportPayment: (payment) => console.log(`${role == 'sponsor' ? 'You' : 'The sponsor'} paid ${toSU(payment)} ${suStr} to the contract.`),
+    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'projectOwner' ? 'you' : 'the Project Owner'}.`),
+    reportExit: () => { console.log('Exiting contract')},
+    reportCancellation: () => { console.log(`${role == 'sponsor' ? 'You' : 'The Sponsor'} cancelled sponsorship.`); },
+    reportTokenMinted: (minted) => {console.log("Token was minted")},
+    didTransfer: (did, _amt) => {consol.log()},
+  });
 
 // Listener for selecting a devnet
 document.getElementById('devnets').addEventListener('change', (event) => {
@@ -60,10 +57,10 @@ document.getElementById('devnets').addEventListener('change', (event) => {
   iBalance = toAU(1000);
 
   (async () => {
-    sellerAcc = await stdlib.newTestAccount(iBalance);
-    await showBalance('seller', sellerAcc);
-    buyerAcc = await stdlib.newTestAccount(iBalance);
-    await showBalance('buyer', buyerAcc);
+    projectOwnerAcc = await stdlib.newTestAccount(iBalance);
+    await showBalance('seller', projectOwnerAcc);
+    sponsorAcc = await stdlib.newTestAccount(iBalance);
+    await showBalance('buyer', sponsorAcc);
   })();
 
   document.getElementById('seller-balance').value = '';
@@ -99,9 +96,9 @@ document.getElementById('deploy-btn').addEventListener('click', (event) => {
       }
     };
 
-    sellerCtc = sellerAcc.contract(backend);
-    await backend.Seller(sellerCtc, sellerInteract);
-    await showBalance('seller', sellerAcc);
+    projectOwnerCtc = projectOwnerAcc.contract(backend);
+    await backend.Seller(projectOwnerCtc, sellerInteract);
+    await showBalance('seller', projectOwnerAcc);
   })();
 });
 
@@ -124,8 +121,8 @@ const initQuantities = () => {
 document.getElementById('view-btn').addEventListener('click', (event) => {
   (async () => {
     const info = JSON.parse(document.getElementById('seller-contract-info').value);
-    buyerCtc = buyerAcc.contract(backend, info);
-    const sellerInfo = await buyerCtc.views.Main.sellerInfo();
+    sponsorCtc = sponsorAcc.contract(backend, info);
+    const sellerInfo = await sponsorCtc.views.Main.sellerInfo();
     if (sellerInfo[0] == 'Some') {
       let productsSel = document.getElementById('products');
       sellerInfo[1].products.forEach((p, i) => {
@@ -174,8 +171,8 @@ document.getElementById('yes-btn').addEventListener('click', (event) => {
     };
 
     // await backend.Buyer(buyerCtc, buyerInteract);
-    await buyerCtc.p.Buyer(buyerInteract)
-    await showBalance('buyer', buyerAcc);
+    await sponsorCtc.p.Buyer(buyerInteract)
+    await showBalance('buyer', sponsorAcc);
   })();
 });
 

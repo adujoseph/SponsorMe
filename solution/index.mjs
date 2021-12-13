@@ -2,8 +2,8 @@ import { loadStdlib } from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
 import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
 
-if (process.argv.length < 3 || ['seller', 'buyer'].includes(process.argv[2]) == false) {
-  console.log('Usage: reach run index [seller|buyer]');
+if (process.argv.length < 3 || ['projectOwner', 'sponsor'].includes(process.argv[2]) == false) {
+  console.log('Usage: reach run index [projectOwner|sponsor]');
   process.exit(0);
 }
 const role = process.argv[2];
@@ -21,36 +21,39 @@ const showBalance = async (acc) => console.log(`Your balance is ${toSU(await std
 (async () => {
 
   const commonInteract = (role) => ({
-    reportPayment: (payment) => console.log(`${role == 'buyer' ? 'You' : 'The buyer'} paid ${toSU(payment)} ${suStr} to the contract.`),
-    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'seller' ? 'you' : 'the seller'}.`),
-    reportCancellation: () => { console.log(`${role == 'buyer' ? 'You' : 'The buyer'} cancelled the order.`); },
-    reportFulfillment: (p, amt) => { 
-      const subjectVerb = role == 'seller' ? 'You owe' : 'The seller owes';
-      const directObject = role == 'buyer' ? 'you' : 'the buyer';
-      console.log(`${subjectVerb} ${directObject} ${amt} ${amt == 1 ? p.unit : p.units} of ${p.name}.`); 
-    },
-    reportExit: () => console.log(`Exiting contract.`)
+    reportPayment: (payment) => console.log(`${role == 'sponsor' ? 'You' : 'The sponsor'} paid ${toSU(payment)} ${suStr} to the contract.`),
+    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'projectOwner' ? 'you' : 'the Project Owner'}.`),
+    reportExit: () => { console.log('Exiting contract')},
+    reportCancellation: () => { console.log(`${role == 'sponsor' ? 'You' : 'The Sponsor'} cancelled sponsorship.`); },
+    reportTokenMinted: (minted) => {console.log("Token was minted")},
+    didTransfer: (did, _amt) => {consol.log()},
   });
 
   // SELLER
-  if (role === 'seller') {
-    const sellerInteract = {
+  if (role === 'projectOwner') {
+    const projectOwnerInteract = {
       ...commonInteract(role),
-      sellerInfo: {
-        announcement: 'List of products for sale:',
-        products: [
-          { name: 'Potatoes', unit: 'bag', units: 'bags', price: toAU(200) },
-          { name: 'Carrots', unit: 'bunch', units: 'bunches', price: toAU(100) },
-          { name: 'Corn', unit: 'ear', units: 'ears', price: toAU(50) }
-        ]
+      projectInfo: {
+        projectName: 'Project Sponsorship Project',
+        projectDetails: 'Solving Niger wahala',
+        fundraisingGoal: toAU(20),
+        contractDuration: 200,
       },
+      reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); },
+      getParams: () => ({
+        name: `Gil`, symbol: `GIL`,
+        url: `https://tinyurl.com/4nd2faer`,
+        metadata: `It's shiny!`,
+        supply: stdlib.parseCurrency(1000),
+        amt: stdlib.parseCurrency(10),
+      }),
       reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
 
     const acc = await stdlib.newTestAccount(iBalance);
     await showBalance(acc);
     const ctc = acc.contract(backend);
-    await backend.Seller(ctc, sellerInteract);
+    await backend.ProjectOwner(ctc, projectOwnerInteract);
     await showBalance(acc);
   }
 
