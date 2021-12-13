@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from "react";
-import * as backend from "./build/index.main.mjs";
-import * as reach from "@reach-sh/stdlib/ALGO";
-import Button from "react-bootstrap/Button";
-
-
-const { standardUnit } = reach;
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AppNavbar from "./components/AppNavbar";
+import Footer from "./components/Footer";
+import Home from "./components/Home";
+import About from "./components/About";
 
 const App = () => {
-  const [isDeployer, setIsDeployer] = useState(false);
-
-  useEffect(() => {
-    // async function fetchData() {
-    //   const acc = await reach.getDefaultAccount();
-    //   const balAtomic = await reach.balanceOf(acc);
-    //   const bal = reach.formatCurrency(balAtomic, 4);
-    // }
-    // fetchData();
-  }, []);
-
   return (
-    <div>
-      <h1>Sponsor Me Header Goes Here...</h1>
-      <Button variant="success">Button #3</Button>
-    </div>
+    <Router>
+      <AppNavbar />
+      <div className="minHeight">
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/about" exact element={<About />} />
+          {/* <Route path="/about" exact component={About} /> */}
+        </Routes>
+      </div>
+      <Footer />
+    </Router>
   );
 };
 
