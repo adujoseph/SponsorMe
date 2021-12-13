@@ -2,8 +2,8 @@ import { loadStdlib } from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
 import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
 
-if (process.argv.length < 3 || ['seller', 'buyer'].includes(process.argv[2]) == false) {
-  console.log('Usage: reach run index [seller|buyer]');
+if (process.argv.length < 3 || ['projectOwner', 'sponsor'].includes(process.argv[2]) == false) {
+  console.log('Usage: reach run index [projectOwner|sponsor]');
   process.exit(0);
 }
 const role = process.argv[2];
@@ -21,60 +21,62 @@ const showBalance = async (acc) => console.log(`Your balance is ${toSU(await std
 (async () => {
 
   const commonInteract = (role) => ({
-    reportPayment: (payment) => console.log(`${role == 'buyer' ? 'You' : 'The buyer'} paid ${toSU(payment)} ${suStr} to the contract.`),
-    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'seller' ? 'you' : 'the seller'}.`),
-    reportCancellation: () => { console.log(`${role == 'buyer' ? 'You' : 'The buyer'} cancelled the order.`); },
-    reportFulfillment: (p, amt) => { 
-      const subjectVerb = role == 'seller' ? 'You owe' : 'The seller owes';
-      const directObject = role == 'buyer' ? 'you' : 'the buyer';
-      console.log(`${subjectVerb} ${directObject} ${amt} ${amt == 1 ? p.unit : p.units} of ${p.name}.`); 
-    },
-    reportExit: () => console.log(`Exiting contract.`)
+    reportPayment: (payment) => console.log(`${role == 'sponsor' ? 'You' : 'The sponsor'} paid ${toSU(payment)} ${suStr} to the contract.`),
+    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'projectOwner' ? 'you' : 'the Project Owner'}.`),
+    reportExit: () => { console.log('Exiting contract')},
+    reportCancellation: () => { console.log(`${role == 'sponsor' ? 'You' : 'The Sponsor'} cancelled sponsorship.`); },
+    reportTokenMinted: (minted) => {console.log(`Token was minted ${minted}`)},
+    didTransfer: (did, amt) => {
+      if ( did ) {
+        amt = _amt;
+        console.log(`${role}: Received transfer of ${toSU(amt)}`);
+      }
+      consol.log(`Token transfered ${amt}`)},
+    programEnded: () => {console.log("Program ended")},
   });
 
   // SELLER
-  if (role === 'seller') {
-    const sellerInteract = {
+  if (role === 'projectOwner') {
+    const projectOwnerInteract = {
       ...commonInteract(role),
-      sellerInfo: {
-        announcement: 'List of products for sale:',
-        products: [
-          { name: 'Potatoes', unit: 'bag', units: 'bags', price: toAU(200) },
-          { name: 'Carrots', unit: 'bunch', units: 'bunches', price: toAU(100) },
-          { name: 'Corn', unit: 'ear', units: 'ears', price: toAU(50) }
-        ]
+      projectInfo: {
+        projectName: 'Project Sponsorship Project',
+        projectDetails: 'Solving Niger wahala',
+        fundraisingGoal: toAU(20),
+        contractDuration: 200,
       },
-      reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
+      reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); },
+      getParams: () => ({
+        name: `Gil`, symbol: `GIL`,
+        url: `https://tinyurl.com/4nd2faer`,
+        metadata: `It's shiny!`,
+        supply: stdlib.parseCurrency(1000),
+        amt: stdlib.parseCurrency(10),
+      }),
+      // reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
 
     const acc = await stdlib.newTestAccount(iBalance);
     await showBalance(acc);
     const ctc = acc.contract(backend);
-    await backend.Seller(ctc, sellerInteract);
+    await backend.ProjectOwner(ctc, projectOwnerInteract);
     await showBalance(acc);
   }
 
   // BUYER
   else {
-    const buyerInteract = {
+    const sponsorInteract = {
       ...commonInteract(role),
-      shop: async (sellerInfo) => {
-        console.log(sellerInfo.announcement);
-        sellerInfo.products.forEach((p, i) => {
-          console.log(`${i + 1}. ${p.name} at ${toSU(p.price)} ${suStr} per unit (${p.unit}).`);
-        });
-        const order = { prodNum: 0, prodAmt: 0 };
-        const prodNum = await ask(`Enter 1-${sellerInfo.products.length}, or 0 to exit:`, (x => x));
-        if (1 <= prodNum && prodNum <= sellerInfo.products.length) {
-          order.prodNum = prodNum;
-          order.prodAmt = await ask(`Enter number of units, or 0 to exit:`, (x => x));
-          const p = sellerInfo.products[order.prodNum - 1];
-          const unitWord = order.prodAmt == 1 ? p.unit : p.units;
-          console.log(`You are ordering ${order.prodAmt} ${unitWord} of ${p.name} at ${toSU(p.price)} ${suStr} per ${p.unit}.`);
+      sponsor: async (projectInfo) => {
+        console.log(projectInfo);
+        const sponsor = { contribute: false, amt: 0 };
+        const confirm = await ask(`Do you agree to sponsor?`, yesno);
+        if (confirm) {
+          // sponsor.amt = await ask(`Do you agree to sponsor?`, yesno);
+          sponsor.contribute = confirm;
         }
-        return order;
+        return sponsor;
       },
-      confirmPurchase: async (total) => await ask(`Do you want to complete the purchase for ${toSU(total)} ${suStr}?`, yesno)
     };
 
     const acc = await stdlib.newTestAccount(iBalance);
@@ -87,7 +89,7 @@ const showBalance = async (acc) => console.log(`Your balance is ${toSU(await std
     //});
     //console.log('END VIEW SECTION');
     await showBalance(acc);
-    await ctc.p.Buyer(buyerInteract);
+    await ctc.p.Sponsor(sponsorInteract);
     await showBalance(acc);
   }
 
