@@ -1,4 +1,16 @@
 
+.minHeight{
+  min-height: 85vh;
+}
+.footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home--wrapper{
+padding: 3rem;
+}
+
 
 /* .App {
   text-align: center;
