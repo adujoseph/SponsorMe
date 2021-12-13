@@ -103,17 +103,15 @@ export const main = Reach.App(() => {
   S.interact.reportTokenMinted(tok1, md1);
   commit();
 // Todo: Add if statement for gradual release of funds...
-  const doTransfer1 = (who, tokX) => {
-    // const sponsorToken = tokX.supply*(40/100)
-    // const proposalToken = tokX.supply - sponsorToken
-    if (who == PO){
-      transfer(0.4 * amt, tokX).to(who);
-      who.interact.didTransfer(true, amt);
-    } else {
-      transfer(0.4 * amt, tokX).to(who);
-      who.interact.didTransfer(true, amt);
-    }
-  };
+const doTransfer1 = (who, tokX) => {
+  if (who == PO){
+    transfer(2 * amt, tokX).to(who);
+    who.interact.didTransfer(true, amt);
+  } else {
+  transfer(2 * amt, tokX).to(who);
+  who.interact.didTransfer(true, amt);
+  }
+};
   
   S.publish();
   doTransfer1(S, tok1);
