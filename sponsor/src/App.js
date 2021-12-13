@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar";
 import Home from "./components/Home/index";
 import About from "./components/About";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
     <Router>
-      <div className="App">
-        <AppNavbar />
+       <AppNavbar />
+      <div className="minHeight">
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/about" component={About} />
@@ -17,6 +18,7 @@ const App = () => {
           {/*  <Route path="/test" component={AcceptWager} />*/}
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 };
