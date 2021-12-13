@@ -1,23 +1,21 @@
 // Automatically generated with Reach 0.1.7 (b34d92ae)
 /* eslint-disable */
-export const _version = '0.1.7';
-export const _versionHash = '0.1.7 (b34d92ae)';
+export const _version = "0.1.7";
+export const _versionHash = "0.1.7 (b34d92ae)";
 export const _backendVersion = 6;
 
 export function getExports(s) {
   const stdlib = s.reachStdlib;
-  return {
-    };
-  };
+  return {};
+}
 export function _getViews(s, viewlib) {
   const stdlib = s.reachStdlib;
   const ctc0 = stdlib.T_Address;
   const ctc1 = stdlib.T_UInt;
   const ctc2 = stdlib.T_Token;
-  
+
   return {
-    infos: {
-      },
+    infos: {},
     views: {
       1: [ctc0],
       2: [ctc0, ctc0],
@@ -35,1065 +33,1443 @@ export function _getViews(s, viewlib) {
       16: [ctc0, ctc0, ctc1, ctc2, ctc1],
       17: [ctc0, ctc1, ctc2, ctc1],
       19: [ctc0, ctc0, ctc1, ctc2, ctc1],
-      20: [ctc0, ctc1, ctc2, ctc1]
-      }
-    };
-  
+      20: [ctc0, ctc1, ctc2, ctc1],
+    },
   };
+}
 export function _getMaps(s) {
   const stdlib = s.reachStdlib;
   const ctc0 = stdlib.T_Tuple([]);
   return {
-    mapDataTy: ctc0
-    };
+    mapDataTy: ctc0,
   };
+}
 export async function ProjectOwner(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for ProjectOwner expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for ProjectOwner expects to receive an interact object as its second argument.`));}
+  if (typeof ctcTop !== "object" || ctcTop._initialize === undefined) {
+    return Promise.reject(
+      new Error(
+        `The backend for ProjectOwner expects to receive a contract as its first argument.`
+      )
+    );
+  }
+  if (typeof interact !== "object") {
+    return Promise.reject(
+      new Error(
+        `The backend for ProjectOwner expects to receive an interact object as its second argument.`
+      )
+    );
+  }
   const ctc = ctcTop._initialize();
   const stdlib = ctc.stdlib;
   const ctc0 = stdlib.T_UInt;
-  const ctc1 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 28));
+  const ctc1 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 28)
+  );
   const ctc2 = stdlib.T_Object({
     fundraisingGoal: ctc0,
     projectDetails: ctc1,
-    projectName: ctc1
-    });
+    projectName: ctc1,
+  });
   const ctc3 = stdlib.T_Null;
   const ctc4 = stdlib.T_Bool;
   const ctc5 = stdlib.T_Object({
     amt: ctc0,
-    contribute: ctc4
-    });
-  const ctc6 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 32));
-  const ctc7 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 8));
-  const ctc8 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 96));
+    contribute: ctc4,
+  });
+  const ctc6 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 32)
+  );
+  const ctc7 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 8)
+  );
+  const ctc8 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 96)
+  );
   const ctc9 = stdlib.T_Object({
     amt: ctc0,
     metadata: ctc6,
     name: ctc6,
     supply: ctc0,
     symbol: ctc7,
-    url: ctc8
-    });
+    url: ctc8,
+  });
   const ctc10 = stdlib.T_Token;
   const ctc11 = stdlib.T_Address;
-  
-  
-  const v260 = stdlib.protect(ctc2, interact.projectInfo, 'for ProjectOwner\'s interact field projectInfo');
-  
-  const txn1 = await (ctc.sendrecv({
+
+  const v260 = stdlib.protect(
+    ctc2,
+    interact.projectInfo,
+    "for ProjectOwner's interact field projectInfo"
+  );
+
+  const txn1 = await ctc.sendrecv({
     args: [v260],
     evt_cnt: 1,
     funcNum: 0,
-    lct: stdlib.checkedBigNumberify('./index.rsh:43:6:dot', stdlib.UInt_max, 0),
+    lct: stdlib.checkedBigNumberify("./index.rsh:43:6:dot", stdlib.UInt_max, 0),
     onlyIf: true,
     out_tys: [ctc2],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-    sim_p: (async (txn1) => {
+    pay: [
+      stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+      [],
+    ],
+    sim_p: async txn1 => {
       const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-      
-      const {data: [v264], secs: v266, time: v265, didSend: v24, from: v263 } = txn1;
-      
+
+      const {
+        data: [v264],
+        secs: v266,
+        time: v265,
+        didSend: v24,
+        from: v263,
+      } = txn1;
+
       sim_r.txns.push({
-        amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-        kind: 'to',
-        tok: undefined
-        });
-      
+        amt: stdlib.checkedBigNumberify(
+          "./index.rsh:decimal",
+          stdlib.UInt_max,
+          0
+        ),
+        kind: "to",
+        tok: undefined,
+      });
+
       sim_r.isHalt = false;
-      
+
       return sim_r;
-      }),
+    },
     soloSend: true,
     timeoutAt: undefined,
     tys: [ctc2],
-    waitIfNotPresent: false
-    }));
-  const {data: [v264], secs: v266, time: v265, didSend: v24, from: v263 } = txn1;
-  ;
+    waitIfNotPresent: false,
+  });
+  const {
+    data: [v264],
+    secs: v266,
+    time: v265,
+    didSend: v24,
+    from: v263,
+  } = txn1;
   stdlib.protect(ctc3, await interact.reportReady(), {
-    at: './index.rsh:1:39:application',
-    fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:45:26:application call to "liftedInteract" (defined at: ./index.rsh:45:26:application)'],
-    msg: 'reportReady',
-    who: 'ProjectOwner'
-    });
-  
-  const txn2 = await (ctc.recv({
+    at: "./index.rsh:1:39:application",
+    fs: [
+      "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+      'at ./index.rsh:45:26:application call to "liftedInteract" (defined at: ./index.rsh:45:26:application)',
+    ],
+    msg: "reportReady",
+    who: "ProjectOwner",
+  });
+
+  const txn2 = await ctc.recv({
     didSend: false,
     evt_cnt: 1,
     funcNum: 1,
     out_tys: [ctc5],
     timeoutAt: undefined,
-    waitIfNotPresent: false
-    }));
-  const {data: [v273], secs: v275, time: v274, didSend: v38, from: v272 } = txn2;
-  ;
+    waitIfNotPresent: false,
+  });
+  const {
+    data: [v273],
+    secs: v275,
+    time: v274,
+    didSend: v38,
+    from: v272,
+  } = txn2;
   const v277 = v273.contribute;
   if (v277) {
     const v287 = v264.fundraisingGoal;
-    
-    const txn3 = await (ctc.sendrecv({
+
+    const txn3 = await ctc.sendrecv({
       args: [v263, v272, v287],
       evt_cnt: 1,
       funcNum: 2,
       lct: v274,
       onlyIf: true,
       out_tys: [ctc0],
-      pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-      sim_p: (async (txn3) => {
+      pay: [
+        stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+        [],
+      ],
+      sim_p: async txn3 => {
         const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-        
-        const {data: [v289], secs: v291, time: v290, didSend: v65, from: v288 } = txn3;
-        
+
+        const {
+          data: [v289],
+          secs: v291,
+          time: v290,
+          didSend: v65,
+          from: v288,
+        } = txn3;
+
         sim_r.txns.push({
-          amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-          kind: 'to',
-          tok: undefined
-          });
+          amt: stdlib.checkedBigNumberify(
+            "./index.rsh:decimal",
+            stdlib.UInt_max,
+            0
+          ),
+          kind: "to",
+          tok: undefined,
+        });
         const v293 = stdlib.addressEq(v263, v288);
         stdlib.assert(v293, {
-          at: './index.rsh:64:6:dot',
+          at: "./index.rsh:64:6:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'ProjectOwner'
-          });
+          msg: "sender correct",
+          who: "ProjectOwner",
+        });
         sim_r.isHalt = false;
-        
+
         return sim_r;
-        }),
+      },
       soloSend: true,
       timeoutAt: undefined,
       tys: [ctc11, ctc11, ctc0],
-      waitIfNotPresent: false
-      }));
-    const {data: [v289], secs: v291, time: v290, didSend: v65, from: v288 } = txn3;
-    ;
+      waitIfNotPresent: false,
+    });
+    const {
+      data: [v289],
+      secs: v291,
+      time: v290,
+      didSend: v65,
+      from: v288,
+    } = txn3;
     const v293 = stdlib.addressEq(v263, v288);
     stdlib.assert(v293, {
-      at: './index.rsh:64:6:dot',
+      at: "./index.rsh:64:6:dot",
       fs: [],
-      msg: 'sender correct',
-      who: 'ProjectOwner'
-      });
-    const txn4 = await (ctc.recv({
+      msg: "sender correct",
+      who: "ProjectOwner",
+    });
+    const txn4 = await ctc.recv({
       didSend: false,
       evt_cnt: 1,
       funcNum: 3,
       out_tys: [ctc4],
       timeoutAt: undefined,
-      waitIfNotPresent: false
-      }));
-    const {data: [v298], secs: v300, time: v299, didSend: v76, from: v297 } = txn4;
-    ;
+      waitIfNotPresent: false,
+    });
+    const {
+      data: [v298],
+      secs: v300,
+      time: v299,
+      didSend: v76,
+      from: v297,
+    } = txn4;
     const v302 = stdlib.addressEq(v272, v297);
     stdlib.assert(v302, {
-      at: './index.rsh:69:5:dot',
+      at: "./index.rsh:69:5:dot",
       fs: [],
-      msg: 'sender correct',
-      who: 'ProjectOwner'
-      });
+      msg: "sender correct",
+      who: "ProjectOwner",
+    });
     if (v298) {
-      const txn5 = await (ctc.recv({
+      const txn5 = await ctc.recv({
         didSend: false,
         evt_cnt: 0,
         funcNum: 4,
         out_tys: [],
         timeoutAt: undefined,
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v312, time: v311, didSend: v99, from: v310 } = txn5;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v312,
+        time: v311,
+        didSend: v99,
+        from: v310,
+      } = txn5;
       const v315 = stdlib.addressEq(v272, v310);
       stdlib.assert(v315, {
-        at: './index.rsh:80:5:dot',
+        at: "./index.rsh:80:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'ProjectOwner'
-        });
+        msg: "sender correct",
+        who: "ProjectOwner",
+      });
       stdlib.protect(ctc3, await interact.reportPayment(v289), {
-        at: './index.rsh:82:45:application',
-        fs: ['at ./index.rsh:82:7:application call to [unknown function] (defined at: ./index.rsh:82:20:function exp)'],
-        msg: 'reportPayment',
-        who: 'ProjectOwner'
-        });
-      
-      ;
+        at: "./index.rsh:82:45:application",
+        fs: [
+          "at ./index.rsh:82:7:application call to [unknown function] (defined at: ./index.rsh:82:20:function exp)",
+        ],
+        msg: "reportPayment",
+        who: "ProjectOwner",
+      });
+
       stdlib.protect(ctc3, await interact.reportTransfer(v289), {
-        at: './index.rsh:84:46:application',
-        fs: ['at ./index.rsh:84:7:application call to [unknown function] (defined at: ./index.rsh:84:20:function exp)'],
-        msg: 'reportTransfer',
-        who: 'ProjectOwner'
-        });
-      
+        at: "./index.rsh:84:46:application",
+        fs: [
+          "at ./index.rsh:84:7:application call to [unknown function] (defined at: ./index.rsh:84:20:function exp)",
+        ],
+        msg: "reportTransfer",
+        who: "ProjectOwner",
+      });
+
       const v326 = stdlib.protect(ctc9, await interact.getParams(), {
-        at: './index.rsh:87:100:application',
-        fs: ['at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)'],
-        msg: 'getParams',
-        who: 'ProjectOwner'
-        });
+        at: "./index.rsh:87:100:application",
+        fs: [
+          "at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)",
+        ],
+        msg: "getParams",
+        who: "ProjectOwner",
+      });
       const v327 = v326.name;
       const v328 = v326.symbol;
       const v329 = v326.url;
       const v330 = v326.metadata;
       const v331 = v326.supply;
       const v332 = v326.amt;
-      const v333 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:88:10:decimal', stdlib.UInt_max, 4), v332);
+      const v333 = stdlib.mul(
+        stdlib.checkedBigNumberify(
+          "./index.rsh:88:10:decimal",
+          stdlib.UInt_max,
+          4
+        ),
+        v332
+      );
       const v334 = stdlib.le(v333, v331);
       stdlib.assert(v334, {
-        at: './index.rsh:88:9:application',
-        fs: ['at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)'],
+        at: "./index.rsh:88:9:application",
+        fs: [
+          "at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)",
+        ],
         msg: null,
-        who: 'ProjectOwner'
-        });
+        who: "ProjectOwner",
+      });
       const v336 = stdlib.le(v333, stdlib.UInt_max);
       stdlib.assert(v336, {
-        at: './index.rsh:89:9:application',
-        fs: ['at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)'],
+        at: "./index.rsh:89:9:application",
+        fs: [
+          "at ./index.rsh:87:10:application call to [unknown function] (defined at: ./index.rsh:87:14:function exp)",
+        ],
         msg: null,
-        who: 'ProjectOwner'
-        });
-      
-      const txn6 = await (ctc.sendrecv({
+        who: "ProjectOwner",
+      });
+
+      const txn6 = await ctc.sendrecv({
         args: [v263, v272, v327, v328, v329, v330, v331, v332],
         evt_cnt: 6,
         funcNum: 5,
         lct: v311,
         onlyIf: true,
         out_tys: [ctc6, ctc7, ctc8, ctc6, ctc0, ctc0],
-        pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-        sim_p: (async (txn6) => {
+        pay: [
+          stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+          [],
+        ],
+        sim_p: async txn6 => {
           const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-          
-          const {data: [v338, v339, v340, v341, v342, v343], secs: v345, time: v344, didSend: v141, from: v337 } = txn6;
-          
+
+          const {
+            data: [v338, v339, v340, v341, v342, v343],
+            secs: v345,
+            time: v344,
+            didSend: v141,
+            from: v337,
+          } = txn6;
+
           sim_r.txns.push({
-            amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-            kind: 'to',
-            tok: undefined
-            });
+            amt: stdlib.checkedBigNumberify(
+              "./index.rsh:decimal",
+              stdlib.UInt_max,
+              0
+            ),
+            kind: "to",
+            tok: undefined,
+          });
           const v347 = stdlib.addressEq(v263, v337);
           stdlib.assert(v347, {
-            at: './index.rsh:92:6:dot',
+            at: "./index.rsh:92:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
-          const v348 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:93:11:decimal', stdlib.UInt_max, 4), v343);
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
+          const v348 = stdlib.mul(
+            stdlib.checkedBigNumberify(
+              "./index.rsh:93:11:decimal",
+              stdlib.UInt_max,
+              4
+            ),
+            v343
+          );
           const v349 = stdlib.le(v348, v342);
           stdlib.assert(v349, {
-            at: './index.rsh:93:10:application',
+            at: "./index.rsh:93:10:application",
             fs: [],
             msg: null,
-            who: 'ProjectOwner'
-            });
+            who: "ProjectOwner",
+          });
           const v351 = stdlib.le(v348, stdlib.UInt_max);
           stdlib.assert(v351, {
-            at: './index.rsh:94:10:application',
+            at: "./index.rsh:94:10:application",
             fs: [],
             msg: null,
-            who: 'ProjectOwner'
-            });
-          const v352 = stdlib.simTokenNew(sim_r, v338, v339, v340, v341, v342, undefined);
-          const v353 = await txn6.getOutput('tokenNew', 'v352', ctc10, v352);
-          
+            who: "ProjectOwner",
+          });
+          const v352 = stdlib.simTokenNew(
+            sim_r,
+            v338,
+            v339,
+            v340,
+            v341,
+            v342,
+            undefined
+          );
+          const v353 = await txn6.getOutput("tokenNew", "v352", ctc10, v352);
+
           sim_r.isHalt = false;
-          
+
           return sim_r;
-          }),
+        },
         soloSend: true,
         timeoutAt: undefined,
         tys: [ctc11, ctc11, ctc6, ctc7, ctc8, ctc6, ctc0, ctc0],
-        waitIfNotPresent: false
-        }));
-      const {data: [v338, v339, v340, v341, v342, v343], secs: v345, time: v344, didSend: v141, from: v337 } = txn6;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [v338, v339, v340, v341, v342, v343],
+        secs: v345,
+        time: v344,
+        didSend: v141,
+        from: v337,
+      } = txn6;
       const v347 = stdlib.addressEq(v263, v337);
       stdlib.assert(v347, {
-        at: './index.rsh:92:6:dot',
+        at: "./index.rsh:92:6:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'ProjectOwner'
-        });
-      const v348 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:93:11:decimal', stdlib.UInt_max, 4), v343);
+        msg: "sender correct",
+        who: "ProjectOwner",
+      });
+      const v348 = stdlib.mul(
+        stdlib.checkedBigNumberify(
+          "./index.rsh:93:11:decimal",
+          stdlib.UInt_max,
+          4
+        ),
+        v343
+      );
       const v349 = stdlib.le(v348, v342);
       stdlib.assert(v349, {
-        at: './index.rsh:93:10:application',
+        at: "./index.rsh:93:10:application",
         fs: [],
         msg: null,
-        who: 'ProjectOwner'
-        });
+        who: "ProjectOwner",
+      });
       const v351 = stdlib.le(v348, stdlib.UInt_max);
       stdlib.assert(v351, {
-        at: './index.rsh:94:10:application',
+        at: "./index.rsh:94:10:application",
         fs: [],
         msg: null,
-        who: 'ProjectOwner'
-        });
+        who: "ProjectOwner",
+      });
       const v352 = undefined;
-      const v353 = await txn6.getOutput('tokenNew', 'v352', ctc10, v352);
+      const v353 = await txn6.getOutput("tokenNew", "v352", ctc10, v352);
       const v355 = {
         metadata: v341,
         name: v338,
         supply: v342,
         symbol: v339,
-        url: v340
-        };
+        url: v340,
+      };
       stdlib.protect(ctc3, await interact.reportTokenMinted(v353, v355), {
-        at: './index.rsh:1:39:application',
-        fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:99:32:application call to "liftedInteract" (defined at: ./index.rsh:99:32:application)'],
-        msg: 'reportTokenMinted',
-        who: 'ProjectOwner'
-        });
-      
-      const txn7 = await (ctc.recv({
+        at: "./index.rsh:1:39:application",
+        fs: [
+          "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+          'at ./index.rsh:99:32:application call to "liftedInteract" (defined at: ./index.rsh:99:32:application)',
+        ],
+        msg: "reportTokenMinted",
+        who: "ProjectOwner",
+      });
+
+      const txn7 = await ctc.recv({
         didSend: false,
         evt_cnt: 0,
         funcNum: 6,
         out_tys: [],
         timeoutAt: undefined,
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v358, time: v357, didSend: v158, from: v356 } = txn7;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v358,
+        time: v357,
+        didSend: v158,
+        from: v356,
+      } = txn7;
       const v360 = stdlib.addressEq(v272, v356);
       stdlib.assert(v360, {
-        at: './index.rsh:102:5:dot',
+        at: "./index.rsh:102:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'ProjectOwner'
-        });
-      const txn8 = await (ctc.recv({
+        msg: "sender correct",
+        who: "ProjectOwner",
+      });
+      const txn8 = await ctc.recv({
         didSend: false,
         evt_cnt: 0,
         funcNum: 7,
         out_tys: [],
         timeoutAt: undefined,
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v365, time: v364, didSend: v169, from: v363 } = txn8;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v365,
+        time: v364,
+        didSend: v169,
+        from: v363,
+      } = txn8;
       const v367 = stdlib.addressEq(v272, v363);
       stdlib.assert(v367, {
-        at: './index.rsh:116:5:dot',
+        at: "./index.rsh:116:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'ProjectOwner'
-        });
+        msg: "sender correct",
+        who: "ProjectOwner",
+      });
       const v368 = stdlib.addressEq(v272, v263);
       if (v368) {
-        const v369 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:108:14:decimal', stdlib.UInt_max, 2), v343);
-        ;
-        const txn9 = await (ctc.sendrecv({
+        const v369 = stdlib.mul(
+          stdlib.checkedBigNumberify(
+            "./index.rsh:108:14:decimal",
+            stdlib.UInt_max,
+            2
+          ),
+          v343
+        );
+        const txn9 = await ctc.sendrecv({
           args: [v263, v272, v342, v353, v369],
           evt_cnt: 0,
           funcNum: 8,
           lct: v364,
           onlyIf: true,
           out_tys: [],
-          pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-          sim_p: (async (txn9) => {
+          pay: [
+            stdlib.checkedBigNumberify(
+              "./index.rsh:decimal",
+              stdlib.UInt_max,
+              0
+            ),
+            [],
+          ],
+          sim_p: async txn9 => {
             const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-            
-            const {data: [], secs: v378, time: v377, didSend: v195, from: v376 } = txn9;
-            
+
+            const {
+              data: [],
+              secs: v378,
+              time: v377,
+              didSend: v195,
+              from: v376,
+            } = txn9;
+
             sim_r.txns.push({
-              amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-              kind: 'to',
-              tok: undefined
-              });
+              amt: stdlib.checkedBigNumberify(
+                "./index.rsh:decimal",
+                stdlib.UInt_max,
+                0
+              ),
+              kind: "to",
+              tok: undefined,
+            });
             const v380 = stdlib.addressEq(v263, v376);
             stdlib.assert(v380, {
-              at: './index.rsh:119:6:dot',
+              at: "./index.rsh:119:6:dot",
               fs: [],
-              msg: 'sender correct',
-              who: 'ProjectOwner'
-              });
+              msg: "sender correct",
+              who: "ProjectOwner",
+            });
             const v381 = stdlib.addressEq(v263, v263);
             if (v381) {
               sim_r.txns.push({
                 amt: v369,
-                kind: 'from',
+                kind: "from",
                 to: v263,
-                tok: v353
-                });
-              
+                tok: v353,
+              });
+
               sim_r.isHalt = false;
-              }
-            else {
+            } else {
               sim_r.txns.push({
                 amt: v369,
-                kind: 'from',
+                kind: "from",
                 to: v263,
-                tok: v353
-                });
-              
+                tok: v353,
+              });
+
               sim_r.isHalt = false;
-              }
+            }
             return sim_r;
-            }),
+          },
           soloSend: true,
           timeoutAt: undefined,
           tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-          waitIfNotPresent: false
-          }));
-        const {data: [], secs: v378, time: v377, didSend: v195, from: v376 } = txn9;
-        ;
+          waitIfNotPresent: false,
+        });
+        const {
+          data: [],
+          secs: v378,
+          time: v377,
+          didSend: v195,
+          from: v376,
+        } = txn9;
         const v380 = stdlib.addressEq(v263, v376);
         stdlib.assert(v380, {
-          at: './index.rsh:119:6:dot',
+          at: "./index.rsh:119:6:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'ProjectOwner'
-          });
+          msg: "sender correct",
+          who: "ProjectOwner",
+        });
         const v381 = stdlib.addressEq(v263, v263);
         if (v381) {
-          ;
           stdlib.protect(ctc3, await interact.didTransfer(true, v343), {
-            at: './index.rsh:1:39:application',
-            fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)', 'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-            msg: 'didTransfer',
-            who: 'ProjectOwner'
-            });
-          
-          const txn10 = await (ctc.sendrecv({
+            at: "./index.rsh:1:39:application",
+            fs: [
+              "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+              'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)',
+              'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+            ],
+            msg: "didTransfer",
+            who: "ProjectOwner",
+          });
+
+          const txn10 = await ctc.sendrecv({
             args: [v263, v272, v342, v353, v369],
             evt_cnt: 0,
             funcNum: 9,
             lct: v377,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0), [[v369, v353]]],
-            sim_p: (async (txn10) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v392, time: v391, didSend: v225, from: v390 } = txn10;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:122:6:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v369, v353]],
+            ],
+            sim_p: async txn10 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v392,
+                time: v391,
+                didSend: v225,
+                from: v390,
+              } = txn10;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:122:6:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v369,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v397 = stdlib.addressEq(v263, v390);
               stdlib.assert(v397, {
-                at: './index.rsh:122:6:dot',
+                at: "./index.rsh:122:6:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'ProjectOwner'
-                });
+                msg: "sender correct",
+                who: "ProjectOwner",
+              });
               sim_r.isHalt = false;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v392, time: v391, didSend: v225, from: v390 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v392,
+            time: v391,
+            didSend: v225,
+            from: v390,
+          } = txn10;
           const v397 = stdlib.addressEq(v263, v390);
           stdlib.assert(v397, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
-          const txn11 = await (ctc.recv({
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
+          const txn11 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 10,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v401, time: v400, didSend: v235, from: v399 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v401,
+            time: v400,
+            didSend: v235,
+            from: v399,
+          } = txn11;
           const v406 = stdlib.addressEq(v272, v399);
           stdlib.assert(v406, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc3, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'ProjectOwner'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "ProjectOwner",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        else {
-          ;
+        } else {
           stdlib.protect(ctc3, await interact.didTransfer(true, v343), {
-            at: './index.rsh:1:39:application',
-            fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)', 'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-            msg: 'didTransfer',
-            who: 'ProjectOwner'
-            });
-          
-          const txn10 = await (ctc.sendrecv({
+            at: "./index.rsh:1:39:application",
+            fs: [
+              "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+              'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)',
+              'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+            ],
+            msg: "didTransfer",
+            who: "ProjectOwner",
+          });
+
+          const txn10 = await ctc.sendrecv({
             args: [v263, v272, v342, v353, v369],
             evt_cnt: 0,
             funcNum: 11,
             lct: v377,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0), [[v369, v353]]],
-            sim_p: (async (txn10) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v435, time: v434, didSend: v225, from: v433 } = txn10;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:122:6:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v369, v353]],
+            ],
+            sim_p: async txn10 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v435,
+                time: v434,
+                didSend: v225,
+                from: v433,
+              } = txn10;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:122:6:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v369,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v440 = stdlib.addressEq(v263, v433);
               stdlib.assert(v440, {
-                at: './index.rsh:122:6:dot',
+                at: "./index.rsh:122:6:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'ProjectOwner'
-                });
+                msg: "sender correct",
+                who: "ProjectOwner",
+              });
               sim_r.isHalt = false;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v435, time: v434, didSend: v225, from: v433 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v435,
+            time: v434,
+            didSend: v225,
+            from: v433,
+          } = txn10;
           const v440 = stdlib.addressEq(v263, v433);
           stdlib.assert(v440, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
-          const txn11 = await (ctc.recv({
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
+          const txn11 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 12,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v444, time: v443, didSend: v235, from: v442 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v444,
+            time: v443,
+            didSend: v235,
+            from: v442,
+          } = txn11;
           const v449 = stdlib.addressEq(v272, v442);
           stdlib.assert(v449, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc3, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'ProjectOwner'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "ProjectOwner",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        
         }
-      else {
-        const v468 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:111:12:decimal', stdlib.UInt_max, 2), v343);
-        ;
-        const txn9 = await (ctc.sendrecv({
+      } else {
+        const v468 = stdlib.mul(
+          stdlib.checkedBigNumberify(
+            "./index.rsh:111:12:decimal",
+            stdlib.UInt_max,
+            2
+          ),
+          v343
+        );
+        const txn9 = await ctc.sendrecv({
           args: [v263, v272, v342, v353, v468],
           evt_cnt: 0,
           funcNum: 13,
           lct: v364,
           onlyIf: true,
           out_tys: [],
-          pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-          sim_p: (async (txn9) => {
+          pay: [
+            stdlib.checkedBigNumberify(
+              "./index.rsh:decimal",
+              stdlib.UInt_max,
+              0
+            ),
+            [],
+          ],
+          sim_p: async txn9 => {
             const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-            
-            const {data: [], secs: v477, time: v476, didSend: v195, from: v475 } = txn9;
-            
+
+            const {
+              data: [],
+              secs: v477,
+              time: v476,
+              didSend: v195,
+              from: v475,
+            } = txn9;
+
             sim_r.txns.push({
-              amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-              kind: 'to',
-              tok: undefined
-              });
+              amt: stdlib.checkedBigNumberify(
+                "./index.rsh:decimal",
+                stdlib.UInt_max,
+                0
+              ),
+              kind: "to",
+              tok: undefined,
+            });
             const v479 = stdlib.addressEq(v263, v475);
             stdlib.assert(v479, {
-              at: './index.rsh:119:6:dot',
+              at: "./index.rsh:119:6:dot",
               fs: [],
-              msg: 'sender correct',
-              who: 'ProjectOwner'
-              });
+              msg: "sender correct",
+              who: "ProjectOwner",
+            });
             const v480 = stdlib.addressEq(v263, v263);
             if (v480) {
               sim_r.txns.push({
                 amt: v468,
-                kind: 'from',
+                kind: "from",
                 to: v263,
-                tok: v353
-                });
-              
+                tok: v353,
+              });
+
               sim_r.isHalt = false;
-              }
-            else {
+            } else {
               sim_r.txns.push({
                 amt: v468,
-                kind: 'from',
+                kind: "from",
                 to: v263,
-                tok: v353
-                });
-              
+                tok: v353,
+              });
+
               sim_r.isHalt = false;
-              }
+            }
             return sim_r;
-            }),
+          },
           soloSend: true,
           timeoutAt: undefined,
           tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-          waitIfNotPresent: false
-          }));
-        const {data: [], secs: v477, time: v476, didSend: v195, from: v475 } = txn9;
-        ;
+          waitIfNotPresent: false,
+        });
+        const {
+          data: [],
+          secs: v477,
+          time: v476,
+          didSend: v195,
+          from: v475,
+        } = txn9;
         const v479 = stdlib.addressEq(v263, v475);
         stdlib.assert(v479, {
-          at: './index.rsh:119:6:dot',
+          at: "./index.rsh:119:6:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'ProjectOwner'
-          });
+          msg: "sender correct",
+          who: "ProjectOwner",
+        });
         const v480 = stdlib.addressEq(v263, v263);
         if (v480) {
-          ;
           stdlib.protect(ctc3, await interact.didTransfer(true, v343), {
-            at: './index.rsh:1:39:application',
-            fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)', 'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-            msg: 'didTransfer',
-            who: 'ProjectOwner'
-            });
-          
-          const txn10 = await (ctc.sendrecv({
+            at: "./index.rsh:1:39:application",
+            fs: [
+              "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+              'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)',
+              'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+            ],
+            msg: "didTransfer",
+            who: "ProjectOwner",
+          });
+
+          const txn10 = await ctc.sendrecv({
             args: [v263, v272, v342, v353, v468],
             evt_cnt: 0,
             funcNum: 14,
             lct: v476,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0), [[v468, v353]]],
-            sim_p: (async (txn10) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v491, time: v490, didSend: v225, from: v489 } = txn10;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:122:6:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v468, v353]],
+            ],
+            sim_p: async txn10 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v491,
+                time: v490,
+                didSend: v225,
+                from: v489,
+              } = txn10;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:122:6:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v468,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v496 = stdlib.addressEq(v263, v489);
               stdlib.assert(v496, {
-                at: './index.rsh:122:6:dot',
+                at: "./index.rsh:122:6:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'ProjectOwner'
-                });
+                msg: "sender correct",
+                who: "ProjectOwner",
+              });
               sim_r.isHalt = false;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v491, time: v490, didSend: v225, from: v489 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v491,
+            time: v490,
+            didSend: v225,
+            from: v489,
+          } = txn10;
           const v496 = stdlib.addressEq(v263, v489);
           stdlib.assert(v496, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
-          const txn11 = await (ctc.recv({
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
+          const txn11 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 15,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v500, time: v499, didSend: v235, from: v498 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v500,
+            time: v499,
+            didSend: v235,
+            from: v498,
+          } = txn11;
           const v505 = stdlib.addressEq(v272, v498);
           stdlib.assert(v505, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc3, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'ProjectOwner'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "ProjectOwner",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        else {
-          ;
+        } else {
           stdlib.protect(ctc3, await interact.didTransfer(true, v343), {
-            at: './index.rsh:1:39:application',
-            fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)', 'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-            msg: 'didTransfer',
-            who: 'ProjectOwner'
-            });
-          
-          const txn10 = await (ctc.sendrecv({
+            at: "./index.rsh:1:39:application",
+            fs: [
+              "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+              'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)',
+              'at ./index.rsh:120:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+            ],
+            msg: "didTransfer",
+            who: "ProjectOwner",
+          });
+
+          const txn10 = await ctc.sendrecv({
             args: [v263, v272, v342, v353, v468],
             evt_cnt: 0,
             funcNum: 16,
             lct: v476,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0), [[v468, v353]]],
-            sim_p: (async (txn10) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v534, time: v533, didSend: v225, from: v532 } = txn10;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:122:6:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v468, v353]],
+            ],
+            sim_p: async txn10 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v534,
+                time: v533,
+                didSend: v225,
+                from: v532,
+              } = txn10;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:122:6:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:122:6:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v468,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v539 = stdlib.addressEq(v263, v532);
               stdlib.assert(v539, {
-                at: './index.rsh:122:6:dot',
+                at: "./index.rsh:122:6:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'ProjectOwner'
-                });
+                msg: "sender correct",
+                who: "ProjectOwner",
+              });
               sim_r.isHalt = false;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc11, ctc11, ctc0, ctc10, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v534, time: v533, didSend: v225, from: v532 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v534,
+            time: v533,
+            didSend: v225,
+            from: v532,
+          } = txn10;
           const v539 = stdlib.addressEq(v263, v532);
           stdlib.assert(v539, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
-          const txn11 = await (ctc.recv({
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
+          const txn11 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 17,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v543, time: v542, didSend: v235, from: v541 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v543,
+            time: v542,
+            didSend: v235,
+            from: v541,
+          } = txn11;
           const v548 = stdlib.addressEq(v272, v541);
           stdlib.assert(v548, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'ProjectOwner'
-            });
+            msg: "sender correct",
+            who: "ProjectOwner",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc3, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'ProjectOwner'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "ProjectOwner",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        
         }
-      
-      
-      
-      
-      
-      
-      
       }
-    else {
+    } else {
       stdlib.protect(ctc3, await interact.reportCancellation(), {
-        at: './index.rsh:72:52:application',
-        fs: ['at ./index.rsh:72:9:application call to [unknown function] (defined at: ./index.rsh:72:22:function exp)'],
-        msg: 'reportCancellation',
-        who: 'ProjectOwner'
-        });
-      
+        at: "./index.rsh:72:52:application",
+        fs: [
+          "at ./index.rsh:72:9:application call to [unknown function] (defined at: ./index.rsh:72:22:function exp)",
+        ],
+        msg: "reportCancellation",
+        who: "ProjectOwner",
+      });
+
       stdlib.protect(ctc3, await interact.reportExit(), {
-        at: './index.rsh:73:44:application',
-        fs: ['at ./index.rsh:73:9:application call to [unknown function] (defined at: ./index.rsh:73:22:function exp)'],
-        msg: 'reportExit',
-        who: 'ProjectOwner'
-        });
-      
+        at: "./index.rsh:73:44:application",
+        fs: [
+          "at ./index.rsh:73:9:application call to [unknown function] (defined at: ./index.rsh:73:22:function exp)",
+        ],
+        msg: "reportExit",
+        who: "ProjectOwner",
+      });
+
       return;
-      }
-    
-    
-    
     }
-  else {
+  } else {
     stdlib.protect(ctc3, await interact.reportCancellation(), {
-      at: './index.rsh:54:52:application',
-      fs: ['at ./index.rsh:54:9:application call to [unknown function] (defined at: ./index.rsh:54:22:function exp)'],
-      msg: 'reportCancellation',
-      who: 'ProjectOwner'
-      });
-    
+      at: "./index.rsh:54:52:application",
+      fs: [
+        "at ./index.rsh:54:9:application call to [unknown function] (defined at: ./index.rsh:54:22:function exp)",
+      ],
+      msg: "reportCancellation",
+      who: "ProjectOwner",
+    });
+
     stdlib.protect(ctc3, await interact.reportExit(), {
-      at: './index.rsh:55:44:application',
-      fs: ['at ./index.rsh:55:9:application call to [unknown function] (defined at: ./index.rsh:55:22:function exp)'],
-      msg: 'reportExit',
-      who: 'ProjectOwner'
-      });
-    
+      at: "./index.rsh:55:44:application",
+      fs: [
+        "at ./index.rsh:55:9:application call to [unknown function] (defined at: ./index.rsh:55:22:function exp)",
+      ],
+      msg: "reportExit",
+      who: "ProjectOwner",
+    });
+
     return;
-    }
-  
-  
-  
-  };
+  }
+}
 export async function Sponsor(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for Sponsor expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for Sponsor expects to receive an interact object as its second argument.`));}
+  if (typeof ctcTop !== "object" || ctcTop._initialize === undefined) {
+    return Promise.reject(
+      new Error(
+        `The backend for Sponsor expects to receive a contract as its first argument.`
+      )
+    );
+  }
+  if (typeof interact !== "object") {
+    return Promise.reject(
+      new Error(
+        `The backend for Sponsor expects to receive an interact object as its second argument.`
+      )
+    );
+  }
   const ctc = ctcTop._initialize();
   const stdlib = ctc.stdlib;
   const ctc0 = stdlib.T_UInt;
-  const ctc1 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 28));
+  const ctc1 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 28)
+  );
   const ctc2 = stdlib.T_Object({
     fundraisingGoal: ctc0,
     projectDetails: ctc1,
-    projectName: ctc1
-    });
+    projectName: ctc1,
+  });
   const ctc3 = stdlib.T_Bool;
   const ctc4 = stdlib.T_Object({
     amt: ctc0,
-    contribute: ctc3
-    });
+    contribute: ctc3,
+  });
   const ctc5 = stdlib.T_Null;
-  const ctc6 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 32));
-  const ctc7 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 8));
-  const ctc8 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, 96));
+  const ctc6 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 32)
+  );
+  const ctc7 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 8)
+  );
+  const ctc8 = stdlib.T_Bytes(
+    stdlib.checkedBigNumberify("<builtin>", stdlib.UInt_max, 96)
+  );
   const ctc9 = stdlib.T_Token;
   const ctc10 = stdlib.T_Address;
-  
-  
-  const txn1 = await (ctc.recv({
+
+  const txn1 = await ctc.recv({
     didSend: false,
     evt_cnt: 1,
     funcNum: 0,
     out_tys: [ctc2],
     timeoutAt: undefined,
-    waitIfNotPresent: false
-    }));
-  const {data: [v264], secs: v266, time: v265, didSend: v24, from: v263 } = txn1;
-  ;
+    waitIfNotPresent: false,
+  });
+  const {
+    data: [v264],
+    secs: v266,
+    time: v265,
+    didSend: v24,
+    from: v263,
+  } = txn1;
   const v271 = stdlib.protect(ctc4, await interact.sponsor(v264), {
-    at: './index.rsh:50:61:application',
-    fs: ['at ./index.rsh:50:9:application call to [unknown function] (defined at: ./index.rsh:50:13:function exp)'],
-    msg: 'sponsor',
-    who: 'Sponsor'
-    });
-  
-  const txn2 = await (ctc.sendrecv({
+    at: "./index.rsh:50:61:application",
+    fs: [
+      "at ./index.rsh:50:9:application call to [unknown function] (defined at: ./index.rsh:50:13:function exp)",
+    ],
+    msg: "sponsor",
+    who: "Sponsor",
+  });
+
+  const txn2 = await ctc.sendrecv({
     args: [v263, v271],
     evt_cnt: 1,
     funcNum: 1,
     lct: v265,
     onlyIf: true,
     out_tys: [ctc4],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-    sim_p: (async (txn2) => {
+    pay: [
+      stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+      [],
+    ],
+    sim_p: async txn2 => {
       const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-      
-      const {data: [v273], secs: v275, time: v274, didSend: v38, from: v272 } = txn2;
-      
+
+      const {
+        data: [v273],
+        secs: v275,
+        time: v274,
+        didSend: v38,
+        from: v272,
+      } = txn2;
+
       sim_r.txns.push({
-        amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-        kind: 'to',
-        tok: undefined
-        });
+        amt: stdlib.checkedBigNumberify(
+          "./index.rsh:decimal",
+          stdlib.UInt_max,
+          0
+        ),
+        kind: "to",
+        tok: undefined,
+      });
       const v277 = v273.contribute;
       if (v277) {
         sim_r.isHalt = false;
-        }
-      else {
+      } else {
         sim_r.txns.push({
-          kind: 'halt',
-          tok: undefined
-          })
+          kind: "halt",
+          tok: undefined,
+        });
         sim_r.isHalt = true;
-        }
+      }
       return sim_r;
-      }),
+    },
     soloSend: true,
     timeoutAt: undefined,
     tys: [ctc10, ctc4],
-    waitIfNotPresent: false
-    }));
-  const {data: [v273], secs: v275, time: v274, didSend: v38, from: v272 } = txn2;
-  ;
+    waitIfNotPresent: false,
+  });
+  const {
+    data: [v273],
+    secs: v275,
+    time: v274,
+    didSend: v38,
+    from: v272,
+  } = txn2;
   const v277 = v273.contribute;
   if (v277) {
-    const txn3 = await (ctc.recv({
+    const txn3 = await ctc.recv({
       didSend: false,
       evt_cnt: 1,
       funcNum: 2,
       out_tys: [ctc0],
       timeoutAt: undefined,
-      waitIfNotPresent: false
-      }));
-    const {data: [v289], secs: v291, time: v290, didSend: v65, from: v288 } = txn3;
-    ;
+      waitIfNotPresent: false,
+    });
+    const {
+      data: [v289],
+      secs: v291,
+      time: v290,
+      didSend: v65,
+      from: v288,
+    } = txn3;
     const v293 = stdlib.addressEq(v263, v288);
     stdlib.assert(v293, {
-      at: './index.rsh:64:6:dot',
+      at: "./index.rsh:64:6:dot",
       fs: [],
-      msg: 'sender correct',
-      who: 'Sponsor'
-      });
-    const v296 = stdlib.protect(ctc3, await interact.confirmAgreeToSponsor(v289), {
-      at: './index.rsh:68:76:application',
-      fs: ['at ./index.rsh:68:9:application call to [unknown function] (defined at: ./index.rsh:68:13:function exp)'],
-      msg: 'confirmAgreeToSponsor',
-      who: 'Sponsor'
-      });
-    
-    const txn4 = await (ctc.sendrecv({
+      msg: "sender correct",
+      who: "Sponsor",
+    });
+    const v296 = stdlib.protect(
+      ctc3,
+      await interact.confirmAgreeToSponsor(v289),
+      {
+        at: "./index.rsh:68:76:application",
+        fs: [
+          "at ./index.rsh:68:9:application call to [unknown function] (defined at: ./index.rsh:68:13:function exp)",
+        ],
+        msg: "confirmAgreeToSponsor",
+        who: "Sponsor",
+      }
+    );
+
+    const txn4 = await ctc.sendrecv({
       args: [v263, v272, v289, v296],
       evt_cnt: 1,
       funcNum: 3,
       lct: v290,
       onlyIf: true,
       out_tys: [ctc3],
-      pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-      sim_p: (async (txn4) => {
+      pay: [
+        stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+        [],
+      ],
+      sim_p: async txn4 => {
         const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-        
-        const {data: [v298], secs: v300, time: v299, didSend: v76, from: v297 } = txn4;
-        
+
+        const {
+          data: [v298],
+          secs: v300,
+          time: v299,
+          didSend: v76,
+          from: v297,
+        } = txn4;
+
         sim_r.txns.push({
-          amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-          kind: 'to',
-          tok: undefined
-          });
+          amt: stdlib.checkedBigNumberify(
+            "./index.rsh:decimal",
+            stdlib.UInt_max,
+            0
+          ),
+          kind: "to",
+          tok: undefined,
+        });
         const v302 = stdlib.addressEq(v272, v297);
         stdlib.assert(v302, {
-          at: './index.rsh:69:5:dot',
+          at: "./index.rsh:69:5:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'Sponsor'
-          });
+          msg: "sender correct",
+          who: "Sponsor",
+        });
         if (v298) {
           sim_r.isHalt = false;
-          }
-        else {
+        } else {
           sim_r.txns.push({
-            kind: 'halt',
-            tok: undefined
-            })
+            kind: "halt",
+            tok: undefined,
+          });
           sim_r.isHalt = true;
-          }
+        }
         return sim_r;
-        }),
+      },
       soloSend: true,
       timeoutAt: undefined,
       tys: [ctc10, ctc10, ctc0, ctc3],
-      waitIfNotPresent: false
-      }));
-    const {data: [v298], secs: v300, time: v299, didSend: v76, from: v297 } = txn4;
-    ;
+      waitIfNotPresent: false,
+    });
+    const {
+      data: [v298],
+      secs: v300,
+      time: v299,
+      didSend: v76,
+      from: v297,
+    } = txn4;
     const v302 = stdlib.addressEq(v272, v297);
     stdlib.assert(v302, {
-      at: './index.rsh:69:5:dot',
+      at: "./index.rsh:69:5:dot",
       fs: [],
-      msg: 'sender correct',
-      who: 'Sponsor'
-      });
+      msg: "sender correct",
+      who: "Sponsor",
+    });
     if (v298) {
-      const txn5 = await (ctc.sendrecv({
+      const txn5 = await ctc.sendrecv({
         args: [v263, v272, v289],
         evt_cnt: 0,
         funcNum: 4,
@@ -1101,691 +1477,895 @@ export async function Sponsor(ctcTop, interact) {
         onlyIf: true,
         out_tys: [],
         pay: [v289, []],
-        sim_p: (async (txn5) => {
+        sim_p: async txn5 => {
           const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-          
-          const {data: [], secs: v312, time: v311, didSend: v99, from: v310 } = txn5;
-          
+
+          const {
+            data: [],
+            secs: v312,
+            time: v311,
+            didSend: v99,
+            from: v310,
+          } = txn5;
+
           sim_r.txns.push({
             amt: v289,
-            kind: 'to',
-            tok: undefined
-            });
+            kind: "to",
+            tok: undefined,
+          });
           const v315 = stdlib.addressEq(v272, v310);
           stdlib.assert(v315, {
-            at: './index.rsh:80:5:dot',
+            at: "./index.rsh:80:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+
           sim_r.txns.push({
             amt: v289,
-            kind: 'from',
+            kind: "from",
             to: v263,
-            tok: undefined
-            });
-          
+            tok: undefined,
+          });
+
           sim_r.isHalt = false;
-          
+
           return sim_r;
-          }),
+        },
         soloSend: true,
         timeoutAt: undefined,
         tys: [ctc10, ctc10, ctc0],
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v312, time: v311, didSend: v99, from: v310 } = txn5;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v312,
+        time: v311,
+        didSend: v99,
+        from: v310,
+      } = txn5;
       const v315 = stdlib.addressEq(v272, v310);
       stdlib.assert(v315, {
-        at: './index.rsh:80:5:dot',
+        at: "./index.rsh:80:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'Sponsor'
-        });
+        msg: "sender correct",
+        who: "Sponsor",
+      });
       stdlib.protect(ctc5, await interact.reportPayment(v289), {
-        at: './index.rsh:82:45:application',
-        fs: ['at ./index.rsh:82:7:application call to [unknown function] (defined at: ./index.rsh:82:20:function exp)'],
-        msg: 'reportPayment',
-        who: 'Sponsor'
-        });
-      
-      ;
+        at: "./index.rsh:82:45:application",
+        fs: [
+          "at ./index.rsh:82:7:application call to [unknown function] (defined at: ./index.rsh:82:20:function exp)",
+        ],
+        msg: "reportPayment",
+        who: "Sponsor",
+      });
+
       stdlib.protect(ctc5, await interact.reportTransfer(v289), {
-        at: './index.rsh:84:46:application',
-        fs: ['at ./index.rsh:84:7:application call to [unknown function] (defined at: ./index.rsh:84:20:function exp)'],
-        msg: 'reportTransfer',
-        who: 'Sponsor'
-        });
-      
-      const txn6 = await (ctc.recv({
+        at: "./index.rsh:84:46:application",
+        fs: [
+          "at ./index.rsh:84:7:application call to [unknown function] (defined at: ./index.rsh:84:20:function exp)",
+        ],
+        msg: "reportTransfer",
+        who: "Sponsor",
+      });
+
+      const txn6 = await ctc.recv({
         didSend: false,
         evt_cnt: 6,
         funcNum: 5,
         out_tys: [ctc6, ctc7, ctc8, ctc6, ctc0, ctc0],
         timeoutAt: undefined,
-        waitIfNotPresent: false
-        }));
-      const {data: [v338, v339, v340, v341, v342, v343], secs: v345, time: v344, didSend: v141, from: v337 } = txn6;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [v338, v339, v340, v341, v342, v343],
+        secs: v345,
+        time: v344,
+        didSend: v141,
+        from: v337,
+      } = txn6;
       const v347 = stdlib.addressEq(v263, v337);
       stdlib.assert(v347, {
-        at: './index.rsh:92:6:dot',
+        at: "./index.rsh:92:6:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'Sponsor'
-        });
-      const v348 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:93:11:decimal', stdlib.UInt_max, 4), v343);
+        msg: "sender correct",
+        who: "Sponsor",
+      });
+      const v348 = stdlib.mul(
+        stdlib.checkedBigNumberify(
+          "./index.rsh:93:11:decimal",
+          stdlib.UInt_max,
+          4
+        ),
+        v343
+      );
       const v349 = stdlib.le(v348, v342);
       stdlib.assert(v349, {
-        at: './index.rsh:93:10:application',
+        at: "./index.rsh:93:10:application",
         fs: [],
         msg: null,
-        who: 'Sponsor'
-        });
+        who: "Sponsor",
+      });
       const v351 = stdlib.le(v348, stdlib.UInt_max);
       stdlib.assert(v351, {
-        at: './index.rsh:94:10:application',
+        at: "./index.rsh:94:10:application",
         fs: [],
         msg: null,
-        who: 'Sponsor'
-        });
+        who: "Sponsor",
+      });
       const v352 = undefined;
-      const v353 = await txn6.getOutput('tokenNew', 'v352', ctc9, v352);
-      const txn7 = await (ctc.sendrecv({
+      const v353 = await txn6.getOutput("tokenNew", "v352", ctc9, v352);
+      const txn7 = await ctc.sendrecv({
         args: [v263, v272, v342, v343, v353],
         evt_cnt: 0,
         funcNum: 6,
         lct: v344,
         onlyIf: true,
         out_tys: [],
-        pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-        sim_p: (async (txn7) => {
+        pay: [
+          stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+          [],
+        ],
+        sim_p: async txn7 => {
           const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-          
-          const {data: [], secs: v358, time: v357, didSend: v158, from: v356 } = txn7;
-          
+
+          const {
+            data: [],
+            secs: v358,
+            time: v357,
+            didSend: v158,
+            from: v356,
+          } = txn7;
+
           sim_r.txns.push({
-            amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-            kind: 'to',
-            tok: undefined
-            });
+            amt: stdlib.checkedBigNumberify(
+              "./index.rsh:decimal",
+              stdlib.UInt_max,
+              0
+            ),
+            kind: "to",
+            tok: undefined,
+          });
           const v360 = stdlib.addressEq(v272, v356);
           stdlib.assert(v360, {
-            at: './index.rsh:102:5:dot',
+            at: "./index.rsh:102:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+
           sim_r.isHalt = false;
-          
+
           return sim_r;
-          }),
+        },
         soloSend: true,
         timeoutAt: undefined,
         tys: [ctc10, ctc10, ctc0, ctc0, ctc9],
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v358, time: v357, didSend: v158, from: v356 } = txn7;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v358,
+        time: v357,
+        didSend: v158,
+        from: v356,
+      } = txn7;
       const v360 = stdlib.addressEq(v272, v356);
       stdlib.assert(v360, {
-        at: './index.rsh:102:5:dot',
+        at: "./index.rsh:102:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'Sponsor'
-        });
+        msg: "sender correct",
+        who: "Sponsor",
+      });
       const v362 = {
         metadata: v341,
         name: v338,
         supply: v342,
         symbol: v339,
-        url: v340
-        };
+        url: v340,
+      };
       stdlib.protect(ctc5, await interact.reportTokenMinted(v353, v362), {
-        at: './index.rsh:1:39:application',
-        fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:103:31:application call to "liftedInteract" (defined at: ./index.rsh:103:31:application)'],
-        msg: 'reportTokenMinted',
-        who: 'Sponsor'
-        });
-      
-      const txn8 = await (ctc.sendrecv({
+        at: "./index.rsh:1:39:application",
+        fs: [
+          "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+          'at ./index.rsh:103:31:application call to "liftedInteract" (defined at: ./index.rsh:103:31:application)',
+        ],
+        msg: "reportTokenMinted",
+        who: "Sponsor",
+      });
+
+      const txn8 = await ctc.sendrecv({
         args: [v263, v272, v342, v343, v353],
         evt_cnt: 0,
         funcNum: 7,
         lct: v357,
         onlyIf: true,
         out_tys: [],
-        pay: [stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0), []],
-        sim_p: (async (txn8) => {
+        pay: [
+          stdlib.checkedBigNumberify("./index.rsh:decimal", stdlib.UInt_max, 0),
+          [],
+        ],
+        sim_p: async txn8 => {
           const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-          
-          const {data: [], secs: v365, time: v364, didSend: v169, from: v363 } = txn8;
-          
+
+          const {
+            data: [],
+            secs: v365,
+            time: v364,
+            didSend: v169,
+            from: v363,
+          } = txn8;
+
           sim_r.txns.push({
-            amt: stdlib.checkedBigNumberify('./index.rsh:decimal', stdlib.UInt_max, 0),
-            kind: 'to',
-            tok: undefined
-            });
+            amt: stdlib.checkedBigNumberify(
+              "./index.rsh:decimal",
+              stdlib.UInt_max,
+              0
+            ),
+            kind: "to",
+            tok: undefined,
+          });
           const v367 = stdlib.addressEq(v272, v363);
           stdlib.assert(v367, {
-            at: './index.rsh:116:5:dot',
+            at: "./index.rsh:116:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
+            msg: "sender correct",
+            who: "Sponsor",
+          });
           const v368 = stdlib.addressEq(v272, v263);
           if (v368) {
-            const v369 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:108:14:decimal', stdlib.UInt_max, 2), v343);
+            const v369 = stdlib.mul(
+              stdlib.checkedBigNumberify(
+                "./index.rsh:108:14:decimal",
+                stdlib.UInt_max,
+                2
+              ),
+              v343
+            );
             sim_r.txns.push({
               amt: v369,
-              kind: 'from',
+              kind: "from",
               to: v272,
-              tok: v353
-              });
-            
+              tok: v353,
+            });
+
             sim_r.isHalt = false;
-            }
-          else {
-            const v468 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:111:12:decimal', stdlib.UInt_max, 2), v343);
+          } else {
+            const v468 = stdlib.mul(
+              stdlib.checkedBigNumberify(
+                "./index.rsh:111:12:decimal",
+                stdlib.UInt_max,
+                2
+              ),
+              v343
+            );
             sim_r.txns.push({
               amt: v468,
-              kind: 'from',
+              kind: "from",
               to: v272,
-              tok: v353
-              });
-            
+              tok: v353,
+            });
+
             sim_r.isHalt = false;
-            }
+          }
           return sim_r;
-          }),
+        },
         soloSend: true,
         timeoutAt: undefined,
         tys: [ctc10, ctc10, ctc0, ctc0, ctc9],
-        waitIfNotPresent: false
-        }));
-      const {data: [], secs: v365, time: v364, didSend: v169, from: v363 } = txn8;
-      ;
+        waitIfNotPresent: false,
+      });
+      const {
+        data: [],
+        secs: v365,
+        time: v364,
+        didSend: v169,
+        from: v363,
+      } = txn8;
       const v367 = stdlib.addressEq(v272, v363);
       stdlib.assert(v367, {
-        at: './index.rsh:116:5:dot',
+        at: "./index.rsh:116:5:dot",
         fs: [],
-        msg: 'sender correct',
-        who: 'Sponsor'
-        });
+        msg: "sender correct",
+        who: "Sponsor",
+      });
       const v368 = stdlib.addressEq(v272, v263);
       if (v368) {
-        const v369 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:108:14:decimal', stdlib.UInt_max, 2), v343);
-        ;
+        const v369 = stdlib.mul(
+          stdlib.checkedBigNumberify(
+            "./index.rsh:108:14:decimal",
+            stdlib.UInt_max,
+            2
+          ),
+          v343
+        );
         stdlib.protect(ctc5, await interact.didTransfer(true, v343), {
-          at: './index.rsh:1:39:application',
-          fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)', 'at ./index.rsh:117:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-          msg: 'didTransfer',
-          who: 'Sponsor'
-          });
-        
-        const txn9 = await (ctc.recv({
+          at: "./index.rsh:1:39:application",
+          fs: [
+            "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+            'at ./index.rsh:109:29:application call to "liftedInteract" (defined at: ./index.rsh:109:29:application)',
+            'at ./index.rsh:117:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+          ],
+          msg: "didTransfer",
+          who: "Sponsor",
+        });
+
+        const txn9 = await ctc.recv({
           didSend: false,
           evt_cnt: 0,
           funcNum: 8,
           out_tys: [],
           timeoutAt: undefined,
-          waitIfNotPresent: false
-          }));
-        const {data: [], secs: v378, time: v377, didSend: v195, from: v376 } = txn9;
-        ;
+          waitIfNotPresent: false,
+        });
+        const {
+          data: [],
+          secs: v378,
+          time: v377,
+          didSend: v195,
+          from: v376,
+        } = txn9;
         const v380 = stdlib.addressEq(v263, v376);
         stdlib.assert(v380, {
-          at: './index.rsh:119:6:dot',
+          at: "./index.rsh:119:6:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'Sponsor'
-          });
+          msg: "sender correct",
+          who: "Sponsor",
+        });
         const v381 = stdlib.addressEq(v263, v263);
         if (v381) {
-          ;
-          const txn10 = await (ctc.recv({
+          const txn10 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 9,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v392, time: v391, didSend: v225, from: v390 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v392,
+            time: v391,
+            didSend: v225,
+            from: v390,
+          } = txn10;
           const v397 = stdlib.addressEq(v263, v390);
           stdlib.assert(v397, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          const txn11 = await (ctc.sendrecv({
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+          const txn11 = await ctc.sendrecv({
             args: [v272, v342, v353, v369],
             evt_cnt: 0,
             funcNum: 10,
             lct: v391,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0), [[v369, v353]]],
-            sim_p: (async (txn11) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v401, time: v400, didSend: v235, from: v399 } = txn11;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:124:5:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v369, v353]],
+            ],
+            sim_p: async txn11 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v401,
+                time: v400,
+                didSend: v235,
+                from: v399,
+              } = txn11;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:124:5:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v369,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v406 = stdlib.addressEq(v272, v399);
               stdlib.assert(v406, {
-                at: './index.rsh:124:5:dot',
+                at: "./index.rsh:124:5:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'Sponsor'
-                });
+                msg: "sender correct",
+                who: "Sponsor",
+              });
               stdlib.simTokenBurn(sim_r, v353, v342);
               stdlib.simTokenDestroy(sim_r, v353);
               sim_r.txns.push({
-                kind: 'halt',
-                tok: undefined
-                })
+                kind: "halt",
+                tok: undefined,
+              });
               sim_r.isHalt = true;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc10, ctc0, ctc9, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v401, time: v400, didSend: v235, from: v399 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v401,
+            time: v400,
+            didSend: v235,
+            from: v399,
+          } = txn11;
           const v406 = stdlib.addressEq(v272, v399);
           stdlib.assert(v406, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
+            msg: "sender correct",
+            who: "Sponsor",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc5, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'Sponsor'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "Sponsor",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        else {
-          ;
-          const txn10 = await (ctc.recv({
+        } else {
+          const txn10 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 11,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v435, time: v434, didSend: v225, from: v433 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v435,
+            time: v434,
+            didSend: v225,
+            from: v433,
+          } = txn10;
           const v440 = stdlib.addressEq(v263, v433);
           stdlib.assert(v440, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          const txn11 = await (ctc.sendrecv({
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+          const txn11 = await ctc.sendrecv({
             args: [v272, v342, v353, v369],
             evt_cnt: 0,
             funcNum: 12,
             lct: v434,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0), [[v369, v353]]],
-            sim_p: (async (txn11) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v444, time: v443, didSend: v235, from: v442 } = txn11;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:124:5:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v369, v353]],
+            ],
+            sim_p: async txn11 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v444,
+                time: v443,
+                didSend: v235,
+                from: v442,
+              } = txn11;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:124:5:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v369,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v449 = stdlib.addressEq(v272, v442);
               stdlib.assert(v449, {
-                at: './index.rsh:124:5:dot',
+                at: "./index.rsh:124:5:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'Sponsor'
-                });
+                msg: "sender correct",
+                who: "Sponsor",
+              });
               stdlib.simTokenBurn(sim_r, v353, v342);
               stdlib.simTokenDestroy(sim_r, v353);
               sim_r.txns.push({
-                kind: 'halt',
-                tok: undefined
-                })
+                kind: "halt",
+                tok: undefined,
+              });
               sim_r.isHalt = true;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc10, ctc0, ctc9, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v444, time: v443, didSend: v235, from: v442 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v444,
+            time: v443,
+            didSend: v235,
+            from: v442,
+          } = txn11;
           const v449 = stdlib.addressEq(v272, v442);
           stdlib.assert(v449, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
+            msg: "sender correct",
+            who: "Sponsor",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc5, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'Sponsor'
-            });
-          
-          return;
-          
-          
-          
-          
-          }
-        
-        }
-      else {
-        const v468 = stdlib.mul(stdlib.checkedBigNumberify('./index.rsh:111:12:decimal', stdlib.UInt_max, 2), v343);
-        ;
-        stdlib.protect(ctc5, await interact.didTransfer(true, v343), {
-          at: './index.rsh:1:39:application',
-          fs: ['at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)', 'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)', 'at ./index.rsh:117:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)'],
-          msg: 'didTransfer',
-          who: 'Sponsor'
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "Sponsor",
           });
-        
-        const txn9 = await (ctc.recv({
+
+          return;
+        }
+      } else {
+        const v468 = stdlib.mul(
+          stdlib.checkedBigNumberify(
+            "./index.rsh:111:12:decimal",
+            stdlib.UInt_max,
+            2
+          ),
+          v343
+        );
+        stdlib.protect(ctc5, await interact.didTransfer(true, v343), {
+          at: "./index.rsh:1:39:application",
+          fs: [
+            "at ./index.rsh:1:21:application call to [unknown function] (defined at: ./index.rsh:1:25:function exp)",
+            'at ./index.rsh:112:27:application call to "liftedInteract" (defined at: ./index.rsh:112:27:application)',
+            'at ./index.rsh:117:14:application call to "doTransfer1" (defined at: ./index.rsh:106:33:function exp)',
+          ],
+          msg: "didTransfer",
+          who: "Sponsor",
+        });
+
+        const txn9 = await ctc.recv({
           didSend: false,
           evt_cnt: 0,
           funcNum: 13,
           out_tys: [],
           timeoutAt: undefined,
-          waitIfNotPresent: false
-          }));
-        const {data: [], secs: v477, time: v476, didSend: v195, from: v475 } = txn9;
-        ;
+          waitIfNotPresent: false,
+        });
+        const {
+          data: [],
+          secs: v477,
+          time: v476,
+          didSend: v195,
+          from: v475,
+        } = txn9;
         const v479 = stdlib.addressEq(v263, v475);
         stdlib.assert(v479, {
-          at: './index.rsh:119:6:dot',
+          at: "./index.rsh:119:6:dot",
           fs: [],
-          msg: 'sender correct',
-          who: 'Sponsor'
-          });
+          msg: "sender correct",
+          who: "Sponsor",
+        });
         const v480 = stdlib.addressEq(v263, v263);
         if (v480) {
-          ;
-          const txn10 = await (ctc.recv({
+          const txn10 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 14,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v491, time: v490, didSend: v225, from: v489 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v491,
+            time: v490,
+            didSend: v225,
+            from: v489,
+          } = txn10;
           const v496 = stdlib.addressEq(v263, v489);
           stdlib.assert(v496, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          const txn11 = await (ctc.sendrecv({
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+          const txn11 = await ctc.sendrecv({
             args: [v272, v342, v353, v468],
             evt_cnt: 0,
             funcNum: 15,
             lct: v490,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0), [[v468, v353]]],
-            sim_p: (async (txn11) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v500, time: v499, didSend: v235, from: v498 } = txn11;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:124:5:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v468, v353]],
+            ],
+            sim_p: async txn11 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v500,
+                time: v499,
+                didSend: v235,
+                from: v498,
+              } = txn11;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:124:5:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v468,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v505 = stdlib.addressEq(v272, v498);
               stdlib.assert(v505, {
-                at: './index.rsh:124:5:dot',
+                at: "./index.rsh:124:5:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'Sponsor'
-                });
+                msg: "sender correct",
+                who: "Sponsor",
+              });
               stdlib.simTokenBurn(sim_r, v353, v342);
               stdlib.simTokenDestroy(sim_r, v353);
               sim_r.txns.push({
-                kind: 'halt',
-                tok: undefined
-                })
+                kind: "halt",
+                tok: undefined,
+              });
               sim_r.isHalt = true;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc10, ctc0, ctc9, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v500, time: v499, didSend: v235, from: v498 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v500,
+            time: v499,
+            didSend: v235,
+            from: v498,
+          } = txn11;
           const v505 = stdlib.addressEq(v272, v498);
           stdlib.assert(v505, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
+            msg: "sender correct",
+            who: "Sponsor",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc5, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'Sponsor'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "Sponsor",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        else {
-          ;
-          const txn10 = await (ctc.recv({
+        } else {
+          const txn10 = await ctc.recv({
             didSend: false,
             evt_cnt: 0,
             funcNum: 16,
             out_tys: [],
             timeoutAt: undefined,
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v534, time: v533, didSend: v225, from: v532 } = txn10;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v534,
+            time: v533,
+            didSend: v225,
+            from: v532,
+          } = txn10;
           const v539 = stdlib.addressEq(v263, v532);
           stdlib.assert(v539, {
-            at: './index.rsh:122:6:dot',
+            at: "./index.rsh:122:6:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
-          const txn11 = await (ctc.sendrecv({
+            msg: "sender correct",
+            who: "Sponsor",
+          });
+          const txn11 = await ctc.sendrecv({
             args: [v272, v342, v353, v468],
             evt_cnt: 0,
             funcNum: 17,
             lct: v533,
             onlyIf: true,
             out_tys: [],
-            pay: [stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0), [[v468, v353]]],
-            sim_p: (async (txn11) => {
-              const sim_r = { txns: [], mapRefs: [], mapsPrev: [], mapsNext: [] };
-              
-              const {data: [], secs: v543, time: v542, didSend: v235, from: v541 } = txn11;
-              
+            pay: [
+              stdlib.checkedBigNumberify(
+                "./index.rsh:124:5:dot",
+                stdlib.UInt_max,
+                0
+              ),
+              [[v468, v353]],
+            ],
+            sim_p: async txn11 => {
+              const sim_r = {
+                txns: [],
+                mapRefs: [],
+                mapsPrev: [],
+                mapsNext: [],
+              };
+
+              const {
+                data: [],
+                secs: v543,
+                time: v542,
+                didSend: v235,
+                from: v541,
+              } = txn11;
+
               sim_r.txns.push({
-                amt: stdlib.checkedBigNumberify('./index.rsh:124:5:dot', stdlib.UInt_max, 0),
-                kind: 'to',
-                tok: undefined
-                });
+                amt: stdlib.checkedBigNumberify(
+                  "./index.rsh:124:5:dot",
+                  stdlib.UInt_max,
+                  0
+                ),
+                kind: "to",
+                tok: undefined,
+              });
               sim_r.txns.push({
                 amt: v468,
-                kind: 'to',
-                tok: v353
-                });
+                kind: "to",
+                tok: v353,
+              });
               const v548 = stdlib.addressEq(v272, v541);
               stdlib.assert(v548, {
-                at: './index.rsh:124:5:dot',
+                at: "./index.rsh:124:5:dot",
                 fs: [],
-                msg: 'sender correct',
-                who: 'Sponsor'
-                });
+                msg: "sender correct",
+                who: "Sponsor",
+              });
               stdlib.simTokenBurn(sim_r, v353, v342);
               stdlib.simTokenDestroy(sim_r, v353);
               sim_r.txns.push({
-                kind: 'halt',
-                tok: undefined
-                })
+                kind: "halt",
+                tok: undefined,
+              });
               sim_r.isHalt = true;
-              
+
               return sim_r;
-              }),
+            },
             soloSend: true,
             timeoutAt: undefined,
             tys: [ctc10, ctc0, ctc9, ctc0],
-            waitIfNotPresent: false
-            }));
-          const {data: [], secs: v543, time: v542, didSend: v235, from: v541 } = txn11;
-          ;
-          ;
+            waitIfNotPresent: false,
+          });
+          const {
+            data: [],
+            secs: v543,
+            time: v542,
+            didSend: v235,
+            from: v541,
+          } = txn11;
           const v548 = stdlib.addressEq(v272, v541);
           stdlib.assert(v548, {
-            at: './index.rsh:124:5:dot',
+            at: "./index.rsh:124:5:dot",
             fs: [],
-            msg: 'sender correct',
-            who: 'Sponsor'
-            });
+            msg: "sender correct",
+            who: "Sponsor",
+          });
           undefined;
           undefined;
           stdlib.protect(ctc5, await interact.reportExit(), {
-            at: './index.rsh:130:42:application',
-            fs: ['at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)'],
-            msg: 'reportExit',
-            who: 'Sponsor'
-            });
-          
+            at: "./index.rsh:130:42:application",
+            fs: [
+              "at ./index.rsh:130:7:application call to [unknown function] (defined at: ./index.rsh:130:20:function exp)",
+            ],
+            msg: "reportExit",
+            who: "Sponsor",
+          });
+
           return;
-          
-          
-          
-          
-          }
-        
         }
-      
-      
-      
-      
-      
-      
-      
       }
-    else {
+    } else {
       stdlib.protect(ctc5, await interact.reportCancellation(), {
-        at: './index.rsh:72:52:application',
-        fs: ['at ./index.rsh:72:9:application call to [unknown function] (defined at: ./index.rsh:72:22:function exp)'],
-        msg: 'reportCancellation',
-        who: 'Sponsor'
-        });
-      
+        at: "./index.rsh:72:52:application",
+        fs: [
+          "at ./index.rsh:72:9:application call to [unknown function] (defined at: ./index.rsh:72:22:function exp)",
+        ],
+        msg: "reportCancellation",
+        who: "Sponsor",
+      });
+
       stdlib.protect(ctc5, await interact.reportExit(), {
-        at: './index.rsh:73:44:application',
-        fs: ['at ./index.rsh:73:9:application call to [unknown function] (defined at: ./index.rsh:73:22:function exp)'],
-        msg: 'reportExit',
-        who: 'Sponsor'
-        });
-      
+        at: "./index.rsh:73:44:application",
+        fs: [
+          "at ./index.rsh:73:9:application call to [unknown function] (defined at: ./index.rsh:73:22:function exp)",
+        ],
+        msg: "reportExit",
+        who: "Sponsor",
+      });
+
       return;
-      }
-    
-    
-    
     }
-  else {
+  } else {
     stdlib.protect(ctc5, await interact.reportCancellation(), {
-      at: './index.rsh:54:52:application',
-      fs: ['at ./index.rsh:54:9:application call to [unknown function] (defined at: ./index.rsh:54:22:function exp)'],
-      msg: 'reportCancellation',
-      who: 'Sponsor'
-      });
-    
+      at: "./index.rsh:54:52:application",
+      fs: [
+        "at ./index.rsh:54:9:application call to [unknown function] (defined at: ./index.rsh:54:22:function exp)",
+      ],
+      msg: "reportCancellation",
+      who: "Sponsor",
+    });
+
     stdlib.protect(ctc5, await interact.reportExit(), {
-      at: './index.rsh:55:44:application',
-      fs: ['at ./index.rsh:55:9:application call to [unknown function] (defined at: ./index.rsh:55:22:function exp)'],
-      msg: 'reportExit',
-      who: 'Sponsor'
-      });
-    
+      at: "./index.rsh:55:44:application",
+      fs: [
+        "at ./index.rsh:55:9:application call to [unknown function] (defined at: ./index.rsh:55:22:function exp)",
+      ],
+      msg: "reportExit",
+      who: "Sponsor",
+    });
+
     return;
-    }
-  
-  
-  
-  };
+  }
+}
 const _ALGO = {
   appApproval: `#pragma version 5
 txn RekeyTo
@@ -4137,8 +4717,8 @@ int 0
   stateKeys: 1,
   stateSize: 88,
   unsupported: [],
-  version: 6
-  };
+  version: 6,
+};
 const _ETH = {
   ABI: `[
   {
@@ -5402,16 +5982,14 @@ const _ETH = {
   BytecodeLen: 17047,
   Which: `oD`,
   version: 5,
-  views: {
-    }
-  };
+  views: {},
+};
 export const _Connectors = {
   ALGO: _ALGO,
-  ETH: _ETH
-  };
+  ETH: _ETH,
+};
 export const _Participants = {
-  "ProjectOwner": ProjectOwner,
-  "Sponsor": Sponsor
-  };
-export const _APIs = {
-  };
+  ProjectOwner: ProjectOwner,
+  Sponsor: Sponsor,
+};
+export const _APIs = {};
