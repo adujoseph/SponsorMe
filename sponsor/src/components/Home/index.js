@@ -93,7 +93,7 @@ const Home = () => {
     };
 
     ctcPO = accPO.contract(backend);
-    await backend.PO(ctcPO, proposalInteract);
+    await backend.ProjectOwner(ctcPO, proposalInteract);
     // await showBalance("seller", sellerAcc);
   };
 
@@ -112,7 +112,7 @@ const Home = () => {
     };
 
     ctcS = accS.contract(backend);
-    await backend.S(ctcS, attachInteract);
+    await backend.Sponsor(ctcS, attachInteract);
     // await showBalance("seller", sellerAcc);
   };
   return (
