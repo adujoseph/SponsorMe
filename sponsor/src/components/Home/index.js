@@ -7,6 +7,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Error from "../../assets/winner.png";
 
 const reach = loadStdlib(process.env);
 const { standardUnit } = reach;
@@ -60,7 +62,7 @@ const Home = () => {
       setErrorMessage("Please enter equity share percentage");
       return;
     }
-    console.log(name, description, amount, share)
+    console.log(name, description, amount, share);
     //deploy with payload
     handleClose();
   };
@@ -70,6 +72,20 @@ const Home = () => {
     toAU = su => reach.parseCurrency(su);
     toSU = au => reach.formatCurrency(au, 4);
     iBalance = toAU(1000);
+
+    const acc = await reach.getDefaultAccount();
+    const fundIt = await reach.parseCurrency(1000);
+    const balAtomic = await reach.balanceOf(acc);
+    const bal = reach.formatCurrency(balAtomic, 4);
+    console.log("trying to get bal: ", bal);
+    try {
+      const faucet = await reach.getFaucet();
+      setView("FundAccount");
+    } catch (e) {
+      setView("");
+    }
+
+    showBalance();
   };
   const showBalance = async acc => {
     console.log(
@@ -194,75 +210,81 @@ const Home = () => {
       <>
         <div>
           <Container className="h-100">
-            <h6>Please fill the form below to request sponsorship</h6>
-            <Form>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Wallet Balance</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="1000"
-                  onChange={e => setAddress(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Project Name</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="NFT Market Place"
-                  onChange={e => setName(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Funding Amount</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="400"
-                  onChange={e => setAmount(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Equity Share</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="40"
-                  onChange={e => setShare(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Project Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  onChange={e => setDescription(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
             <Row>
-              <Button variant="danger" onClick={() => setView("")}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={handleSubmit}>
-                Submit
-              </Button>
+              <Col Col xs={2}></Col>
+              <Col Col xs={8}>
+                <h6>Please fill the form below to request sponsorship</h6>
+                <Form>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Wallet Balance</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="1000"
+                      onChange={e => setAddress(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Project Name</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="NFT Market Place"
+                      onChange={e => setName(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Funding Amount</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="400"
+                      onChange={e => setAmount(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Equity Share</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="40"
+                      onChange={e => setShare(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Label>Project Description</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      onChange={e => setDescription(e.target.value)}
+                    />
+                  </Form.Group>
+                </Form>
+                <Row>
+                  <Button variant="danger" onClick={() => setView("")}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                </Row>
+                <div>
+                  <p>{errorMessage}</p>
+                </div>
+              </Col>
+              <Col Col xs={2}></Col>
             </Row>
-            <div>
-              <p>{errorMessage}</p>
-            </div>
           </Container>
         </div>
       </>
@@ -274,27 +296,35 @@ const Home = () => {
       <>
         <div>
           <Container className="h-100">
-            <h5>Available Balance: 1000</h5>
             <Row>
-              <Col>
-                <p>Project Name: {name}</p>
-                <p>Project Description: {description}</p>
-                <p>Equity Share: {share}</p>
-                <p>Funding Amount: {amount}</p>
-                <p>
-                  {confirm
-                    ? `This project is sponsored by you to the tone of ${amount}, congratulations`
-                    : ""}
-                </p>
+              <Col Col xs={4}></Col>
+              <Col Col xs={4}>
+                <div className="home--attach">
+                  <h5>Available Balance: 1000</h5>
+                  <Row>
+                    <Col>
+                      <p>Project Name: {name}</p>
+                      <p>Project Description: {description}</p>
+                      <p>Equity Share: {share}</p>
+                      <p>Funding Amount: {amount}</p>
+                      <p>
+                        {confirm
+                          ? `This project is sponsored by you to the tone of ${amount}, congratulations`
+                          : ""}
+                      </p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Button variant="danger" onClick={() => setView("")}>
+                      Go Back
+                    </Button>
+                    <Button variant="primary" onClick={handleSponsor}>
+                      Sponsor
+                    </Button>
+                  </Row>
+                </div>
               </Col>
-            </Row>
-            <Row>
-              <Button variant="danger" onClick={() => setView("")}>
-                Go Back
-              </Button>
-              <Button variant="primary" onClick={handleSponsor}>
-                Sponsor
-              </Button>
+              <Col Col xs={4}></Col>
             </Row>
           </Container>
         </div>
@@ -381,13 +411,31 @@ const Home = () => {
       </Modal>
 
       <div className="home--wrapper">
-        <h1>Welcome to Sponsor Me</h1>
-        <p>What will you like to do today?</p>
-        <div>
-          <Button onClick={getSponsorship}>Get Sponsorship</Button>
-          <p>or</p>
-          <Button onClick={beASponsor}>Be a Sponsor</Button>
-        </div>
+        <Row>
+          <Col>
+            <div className="home--jumbo">
+              <h1>Welcome to Sponsor Me</h1>
+              <div className="home--action">
+                <h5 className="home--action">
+                  What will you like to do today?
+                </h5>
+                <div>
+                  <Row>
+                    <Button onClick={getSponsorship}>Get Sponsorship</Button>{" "}
+                    <span className="home--divider">| </span>
+                    <Button onClick={beASponsor}>Be a Sponsor</Button>
+                  </Row>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col>
+            <div>
+              <Image src={Error} fluid />
+            </div>
+          </Col>
+        </Row>
+
         {/* <div>
           <Row>
             <Col>

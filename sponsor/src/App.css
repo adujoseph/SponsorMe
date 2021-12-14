@@ -10,6 +10,31 @@
 .home--wrapper{
 padding: 3rem;
 }
+.home--jumbo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8rem;
+  height: auto;
+}
+.home--action{
+  align-self: center;
+  padding: 2rem;
+}
+.home--action-text{
+  text-align: center;
+  padding: 2rem;
+}
+.home--divider{
+  height: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.home--attach{
+  margin: 5rem auto;
+}
+
 
 
 .App {
