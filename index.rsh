@@ -31,7 +31,7 @@ const sponsorInteract = {
     [Object({projectName: projectName, projectDetails: projectDetails, fundraisingGoal: fundraisingGoal})],
     Object({ contribute: Bool, amt: UInt })
   ),
-  confirmAgreeToSponsor: Fun([UInt], Bool),
+
 };
 
 export const main = Reach.App(() => {
@@ -65,17 +65,6 @@ export const main = Reach.App(() => {
   PO.publish(fund);
 
   commit();
-
-  S.only(() => { const willFund = declassify(interact.confirmAgreeToSponsor(fund)); });
-  S.publish(willFund);
-  if (!willFund) {
-    commit();
-    each([S, PO], () => interact.reportCancellation());
-    each([S, PO], () => interact.reportExit());
-    exit();
-  } else {
-  commit();
-  }
 
 
   S.pay(fund);
