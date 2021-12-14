@@ -124,7 +124,7 @@ const Home = () => {
         <div>
           <Row>
             <Col>
-              <h1 className="display-6">Request Sponsorship</h1>
+              <h5 className="display-6">Request Sponsorship</h5>
               <hr style={{ width: "10rem" }} />
               <p className="text-left mt-3">
                 Showcase your unique idea to the world and get sponsorship upto
