@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col";
 const About = () => {
   return (
     <div>
-      <h1>About SponsorMe</h1>
       <Container className="h-100">
         <Row>
           <Col xs={2} />
