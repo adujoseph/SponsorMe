@@ -1818,10 +1818,10 @@
     "@randlabs/communication-bridge" "^1.0.0"
     belter "^1.0.170"
 
-"@reach-sh/stdlib@^0.1.2-rc.44":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@reach-sh/stdlib/-/stdlib-0.1.6.tgz#6ace956e973d8dc5d199b51b4b34dcd04902fb4c"
-  integrity sha512-IIMeVDvrDTP73X/TkwG3xSD7ucJ6JlM2lOibZiCjcnEkRzOS9vSiqjHTr3PDb6ke8BA+h/0ETMST2UlUPTZklg==
+"@reach-sh/stdlib@^0.1.7-rc.0":
+  version "0.1.7-rc.3"
+  resolved "https://registry.yarnpkg.com/@reach-sh/stdlib/-/stdlib-0.1.7-rc.3.tgz#11adaf6d1b3064787c910a412dbb0f70c4f37193"
+  integrity sha512-tszLdsHJ5pSRt7fuylCiblGCnl5YVt9laXOe0t3E9J3POBiZy0LKXCKVDxxG1z1+7UvYzioYsCOsi29FNkaypQ==
   dependencies:
     "@msgpack/msgpack" "^2.5.1"
     "@randlabs/myalgo-connect" "^1.1.1"
@@ -7657,9 +7657,9 @@ jest@26.6.0:
     import-local "^3.0.2"
     jest-cli "^26.6.0"
 
-"js-conflux-sdk@git+https://github.com/reach-sh/js-conflux-sdk#v1_6_0_blockNumber":
+"js-conflux-sdk@git+https://github.com/reach-sh/js-conflux-sdk.git#v1_6_0_blockNumber":
   version "1.6.0"
-  resolved "git+https://github.com/reach-sh/js-conflux-sdk#6df5f0538c2077a7e29f0be08205b937499a1040"
+  resolved "git+https://github.com/reach-sh/js-conflux-sdk.git#6df5f0538c2077a7e29f0be08205b937499a1040"
   dependencies:
     "@babel/runtime" "^7.8.4"
     "@conflux-dev/conflux-address-js" "^1.0.0"

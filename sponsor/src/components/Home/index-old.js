@@ -12,6 +12,7 @@ import Image from "react-bootstrap/Image";
 import Error from "../../assets/winner.png";
 
 const reach = loadStdlib("ALGO");
+const { standardUnit } = reach;
 reach.setWalletFallback(
   reach.walletFallback({
     providerEnv: "LocalHost",
@@ -19,22 +20,18 @@ reach.setWalletFallback(
   })
 );
 
-const { standardUnit } = reach;
-console.log(standardUnit, "starter", reach);
-
 const Home = () => {
   const [balProj, setBalProj] = useState();
-  const [sponsorBal, setSponsorBal] = useState();
   const [show, setShow] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState();
   const [share, setShare] = useState();
   const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
   const [contractInfo, setContractInfo] = useState("");
   const [view, setView] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [contractId, setContractId] = useState("");
 
   let ctcPO = null;
   let ctcS = null;
@@ -49,6 +46,17 @@ const Home = () => {
   useEffect(() => {
     initials();
   }, []);
+
+  useEffect(() => {
+    getProjectDetails();
+  }, []);
+
+  const getProjectDetails = async () => {
+    if (ctcPO !== null) {
+      const info = await ctcPO.getInfo();
+      console.log("if infor", info);
+    }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -74,37 +82,31 @@ const Home = () => {
     console.log(name, description, amount, share);
     //deploy with payload
     deployProject();
-    // handleClose();
   };
 
   const initials = async () => {
-    suStr = standardUnit;
-    toAU = su => reach.parseCurrency(su);
-    toSU = au => reach.formatCurrency(au, 4);
-    iBalance = toAU(1000);
+    // suStr = standardUnit;
+    // toAU = su => reach.parseCurrency(su);
+    // toSU = au => reach.formatCurrency(au, 4);
+    // iBalance = toAU(1000);
 
     const acc = await reach.getDefaultAccount();
-    const fundIt = await reach.parseCurrency(1000);
-    showBalance(acc);
-    // const balAtomic = await reach.balanceOf(acc);
-    // const bal = reach.formatCurrency(balAtomic, 4);
-    // console.log("trying to get bal: ", bal);
-    try {
-      const faucet = await reach.getFaucet();
-      setView("FundAccount");
-    } catch (e) {
-      setView("");
-    }
-  };
-  const showBalance = async acc => {
     const balAtomic = await reach.balanceOf(acc);
     const bal = reach.formatCurrency(balAtomic, 4);
     setBalProj(bal);
-    // console.log(acc);
-    // console.log(
-    //   `Your balance is ${toSU(await reach.balanceOf(acc))} ${suStr}.`
-    // );
-    // return toSU(await reach.balanceOf(acc));
+    console.log("trying to get bal: ", bal);
+    // try {
+    //   const faucet = await reach.getFaucet();
+    //   setView("FundAccount");
+    // } catch (e) {
+    //   setView("");
+    // }
+  };
+  const showBalance = async acc => {
+    console.log(
+      `Your balance is ${toSU(await reach.balanceOf(acc))} ${suStr}.`
+    );
+    return toSU(await reach.balanceOf(acc));
   };
 
   const commonInteract = role => ({
@@ -140,7 +142,6 @@ const Home = () => {
     // },
     programEnded: () => {
       console.log("Program ended");
-      setView("done");
     },
   });
 
@@ -155,9 +156,7 @@ const Home = () => {
         share: share,
       },
       reportReady: async () => {
-        const info = JSON.stringify(await ctc.getInfo());
-        console.log(`Contract info: ${info}`);
-        setContractInfo(info);
+        console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`);
       },
       getParams: () => ({
         name: `Gil`,
@@ -170,32 +169,47 @@ const Home = () => {
       // reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
 
+
+
+
+    
     const acc = await reach.getDefaultAccount();
     if (await reach.canFundFromFaucet()) {
-      reach.fundFromFaucet(acc, 100000000);
+      reach.fundFromFaucet(acc, 400000000);
+      console.log(
+        "Amazing",
+        reach.formatCurrency(await reach.balanceOf(acc), 4)
+      );
     }
     const ctc = acc.contract(backend);
     await backend.ProjectOwner(ctc, projectOwnerInteract);
-    await showBalance(acc);
-    setView("pending");
   };
 
   const attachProject = async () => {
+    const attachInteract = {
+      attachInfo: {
+        name,
+        amount,
+        share,
+        description,
+        address,
+      },
+      reportReady: async () => {
+        const projectInfo = JSON.stringify(await ctcS.getInfo());
+      },
+    };
+
+    ctcS = accS.contract(backend);
+    await backend.Sponsor(ctcS, attachInteract);
+    // await showBalance("seller", sellerAcc);
     const sponsorInteract = {
       ...commonInteract("sponsor"),
       sponsor: confirm,
     };
-
-    const acc = await reach.getDefaultAccount();
-    if (await reach.canFundFromFaucet()) {
-      reach.fundFromFaucet(acc, 100000000);
-    }
-    const ctc = acc.contract(backend, Number(contractInfo));
-
-    await backend.Sponsor(ctc, sponsorInteract);
-    // await showBalance("seller", sellerAcc);
-
-    // await ctc.p.Sponsor(sponsorInteract);
+    const acc = await reach.newTestAccount(iBalance);
+    const info = contractInfo;
+    const ctc = acc.contract(backend, info);
+    await ctc.p.Sponsor(sponsorInteract);
     await showBalance(acc);
   };
 
@@ -213,15 +227,10 @@ const Home = () => {
 
   const handleConfirm = () => {
     setConfirm(true);
-    handleClose();
     attachProject();
+    handleClose();
   };
 
-  if (view === "pending") {
-    <>
-      <h3>Contract {contractInfo} is pending</h3>
-    </>;
-  }
   if (view === "deploy") {
     return (
       <>
@@ -231,7 +240,7 @@ const Home = () => {
               <Col xs={2}></Col>
               <Col xs={8}>
                 <h6>Please fill the form below to request sponsorship</h6>
-
+                <h5>Contract Info : {contractInfo ? contractInfo : ""}</h5>
                 <Form>
                   <Form.Group
                     className="mb-3"
@@ -242,6 +251,7 @@ const Home = () => {
                       type="email"
                       placeholder="1000"
                       defaultValue={balProj}
+                      onChange={e => setAddress(e.target.value)}
                       disabled={true}
                     />
                   </Form.Group>
@@ -304,14 +314,6 @@ const Home = () => {
               </Col>
               <Col xs={2}></Col>
             </Row>
-            {contractInfo ? (
-              <h6>
-                Your contract with ID: {contractInfo ? contractInfo : ""} has
-                been deployed and await response from a sponsor
-              </h6>
-            ) : (
-              <></>
-            )}
           </Container>
         </div>
       </>
@@ -324,28 +326,19 @@ const Home = () => {
         <div>
           <Container className="h-100">
             <Row>
-              <Col xs={4}></Col>
-              <Col xs={4}>
+              <Col Col xs={4}></Col>
+              <Col Col xs={4}>
                 <div className="home--attach">
-                  <h5>Available Balance: {balProj}</h5>
+                  <h5>Available Balance: 1000</h5>
                   <Row>
                     <Col>
-                      <Form>
-                        <Form.Group
-                          className="mb-3"
-                          controlId="exampleForm.ControlInput1"
-                        >
-                          <Form.Label>Contract ID: </Form.Label>
-                          <Form.Control
-                            type="enter contract id"
-                            placeholder="100"
-                            onChange={e => setContractId(e.target.value)}
-                          />
-                        </Form.Group>
-                      </Form>
+                      <p>Project Name: {name}</p>
+                      <p>Project Description: {description}</p>
+                      <p>Equity Share: {share}</p>
+                      <p>Funding Amount: {amount}</p>
                       <p>
                         {confirm
-                          ? `This project with contract ID: ${contractId} is sponsored by you, congratulations!`
+                          ? `This project is sponsored by you to the tone of ${amount}, congratulations`
                           : ""}
                       </p>
                     </Col>
@@ -360,7 +353,7 @@ const Home = () => {
                   </Row>
                 </div>
               </Col>
-              <Col xs={4}></Col>
+              <Col Col xs={4}></Col>
             </Row>
           </Container>
         </div>
@@ -393,7 +386,11 @@ const Home = () => {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Wallet Address</Form.Label>
-              <Form.Control type="email" placeholder="NFT Market Place" />
+              <Form.Control
+                type="email"
+                placeholder="NFT Market Place"
+                onChange={e => setAddress(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Project Name</Form.Label>
