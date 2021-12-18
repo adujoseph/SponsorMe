@@ -2,6 +2,8 @@
 const projectName = Bytes(28);
 const projectDetails = Bytes(28);
 const fundraisingGoal = UInt;
+// const contractDuration = UInt;
+// const share = UInt;
 
 const commonInteract = {
   reportPayment: Fun([UInt], Null),
@@ -19,6 +21,8 @@ const projectOwnerInteract = {
     projectName: projectName,
     projectDetails: projectDetails,
     fundraisingGoal: fundraisingGoal,
+    // contractDuration: contractDuration,
+    // share: share,
   }),
   reportReady: Fun([], Null),
   getParams: Fun(
@@ -32,6 +36,7 @@ const projectOwnerInteract = {
       amt: UInt,
     })
   ),
+  // releaseTokenGradually: Fun([], Bool),
 };
 
 const sponsorInteract = {
@@ -42,6 +47,8 @@ const sponsorInteract = {
         projectName: projectName,
         projectDetails: projectDetails,
         fundraisingGoal: fundraisingGoal,
+        // contractDuration: contractDuration,
+        // share: share,
       }),
     ],
     Object({ contribute: Bool, amt: UInt })
@@ -81,26 +88,15 @@ export const main = Reach.App(() => {
   });
 
   PO.publish(fund);
-
   commit();
 
-  // S.only(() => { const willFund = declassify(interact.confirmAgreeToSponsor(fund)); });
-  // S.publish(willFund);
-  // if (!willFund) {
-  //   commit();
-  //   each([S, PO], () => interact.reportCancellation());
-  //   each([S, PO], () => interact.reportExit());
-  //   exit();
-  // } else {
-  // commit();
-  // }
 
   S.pay(fund);
-  // transfer(fund).to(PO);
   each([PO, S], () => interact.reportPayment(fund));
   transfer(fund).to(PO);
   each([PO, S], () => interact.reportTransfer(fund));
   commit();
+
   // Get token details and mint
   PO.only(() => {
     const { name, symbol, url, metadata, supply, amt } = declassify(
@@ -109,6 +105,8 @@ export const main = Reach.App(() => {
   });
 
   PO.publish(name, symbol, url, metadata, supply, amt);
+
+  // Token metadata
   const md1 = { name, symbol, url, metadata, supply };
   // Minting token here
   const tok1 = new Token(md1);

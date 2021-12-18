@@ -18,25 +18,51 @@ const toSU = (au) => stdlib.formatCurrency(au, 4);
 const iBalance = toAU(1000);
 const showBalance = async (acc) => console.log(`Your balance is ${toSU(await stdlib.balanceOf(acc))} ${suStr}.`);
 
+// const acc = await stdlib.newTestAccount(iBalance);
 (async () => {
-
+const acc = await stdlib.newTestAccount(iBalance);
   const commonInteract = (role) => ({
     reportPayment: (payment) => console.log(`${role == 'sponsor' ? 'You' : 'The sponsor'} paid ${toSU(payment)} ${suStr} to the contract.`),
     reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'projectOwner' ? 'you' : 'the Project Owner'}.`),
     reportExit: () => { console.log('Exiting contract')},
     reportCancellation: () => { console.log(`${role == 'sponsor' ? 'You' : 'The Sponsor'} cancelled sponsorship.`); },
-    reportTokenMinted: (minted) => {console.log(`Token was minted ${minted}`)},
-    didTransfer: (did, amt) => {
+    reportTokenMinted: (_tok, cmd) => {
+      const tok = _tok;
+      const acceptToken = async () => acc.tokenAccept(tok);
+      console.log(`Token was minted ${tok}`);
+      acceptToken();
+      console.log("token accepted");
+    },
+    didTransfer: (did, _amt) => {
+    // const acc = await stdlib.newTestAccount(iBalance);
+    // const acceptToken = async () => acc.tokenAccept(tok);
+    // acceptToken();
       if ( did ) {
         amt = _amt;
         console.log(`${role}: Received transfer of ${toSU(amt)}`);
       }
       consol.log(`Token transfered ${amt}`)},
+      ///////
+      // tok = _tok;
+      // console.log(`${me}: The token is: ${tok}`);
+      // await showBalance();
+      // // console.log(`${me}: The token computed metadata is:`, cmd);
+      // const omd = await acc.tokenMetadata(tok);
+      // // console.log(`${me}: The token on-chain metadata is:`, omd);
+      // for ( const f in cmd ) {
+      //   assertEq(cmd[f], omd[f]);
+      // }
+      // console.log(`${me}: Opt-in to ${tok}:`);
+      // await acc.tokenAccept(tok);
+      // await showBalance();
     programEnded: () => {console.log("Program ended")},
   });
 
   // SELLER
   if (role === 'projectOwner') {
+    const acc = await stdlib.newTestAccount(iBalance);
+    const acceptToken = async () => acc.tokenAccept(tok);
+    acceptToken();
     const projectOwnerInteract = {
       ...commonInteract(role),
       projectInfo: {
@@ -53,10 +79,11 @@ const showBalance = async (acc) => console.log(`Your balance is ${toSU(await std
         supply: stdlib.parseCurrency(1000),
         amt: stdlib.parseCurrency(10),
       }),
+      
       // reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
 
-    const acc = await stdlib.newTestAccount(iBalance);
+    // const acc = await stdlib.newTestAccount(iBalance);
     await showBalance(acc);
     const ctc = acc.contract(backend);
     await backend.ProjectOwner(ctc, projectOwnerInteract);
