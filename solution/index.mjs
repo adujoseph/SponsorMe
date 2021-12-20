@@ -1,124 +1,186 @@
 import { loadStdlib } from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
 import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
-
-if (process.argv.length < 3 || ['projectOwner', 'sponsor'].includes(process.argv[2]) == false) {
-  console.log('Usage: reach run index [projectOwner|sponsor]');
-  process.exit(0);
-}
-const role = process.argv[2];
-console.log(`Your role is ${role}.`);
-
 const stdlib = loadStdlib(process.env);
-console.log(`The consensus network is ${stdlib.connector}.`);
 
-const suStr = stdlib.standardUnit;
 const toAU = (su) => stdlib.parseCurrency(su);
 const toSU = (au) => stdlib.formatCurrency(au, 4);
-const iBalance = toAU(1000);
-const showBalance = async (acc) => console.log(`Your balance is ${toSU(await stdlib.balanceOf(acc))} ${suStr}.`);
+// const suStr = stdlib.standardUnit;
 
-// const acc = await stdlib.newTestAccount(iBalance);
 (async () => {
-const acc = await stdlib.newTestAccount(iBalance);
-  const commonInteract = (role) => ({
-    reportPayment: (payment) => console.log(`${role == 'sponsor' ? 'You' : 'The sponsor'} paid ${toSU(payment)} ${suStr} to the contract.`),
-    reportTransfer: (payment) => console.log(`The contract paid ${toSU(payment)} ${suStr} to ${role == 'projectOwner' ? 'you' : 'the Project Owner'}.`),
-    reportExit: () => { console.log('Exiting contract')},
-    reportCancellation: () => { console.log(`${role == 'sponsor' ? 'You' : 'The Sponsor'} cancelled sponsorship.`); },
-    reportTokenMinted: (_tok, cmd) => {
+  const isProjectOnwer = await ask(
+    `Start as projec Owner?`,
+    yesno
+  );
+  const who = isProjectOnwer ? 'projectOwner' : 'sponsor';
+
+  console.log(`Starting DApp as ${who}`);
+
+  let acc = null;
+  const createAcc = await ask(
+    `Would you like to create an account? (only possible on devnet)`,
+    yesno
+  );
+  if (createAcc) {
+    acc = await stdlib.newTestAccount(stdlib.parseCurrency(1000));
+  } else {
+    const secret = await ask(
+      `What is your account secret?`,
+      (x => x)
+    );
+    acc = await stdlib.newAccountFromSecret(secret);
+  }
+
+  let ctc = null;
+  if (isProjectOnwer) {
+    ctc = acc.contract(backend);
+    ctc.getInfo().then((info) => {
+      console.log(`The contract is deployed as = ${JSON.stringify(info)}`);
+    });
+
+  } else {
+    const info = await ask(
+      `Please paste the contract information:`,
+      JSON.parse
+    );
+    ctc = acc.contract(backend, info);
+  }
+
+  const fmt = (x) => stdlib.formatCurrency(x, 4);
+  const getBalance = async () => fmt(await stdlib.balanceOf(acc));
+
+  const before = await getBalance();
+  console.log(`Your balance is ${before}`);
+
+  const interact = {
+
+  };
+
+  if (isProjectOnwer) {
+    const pInfo = {
+    projectName: 'Project Sponsorship Project',
+    projectDetails: 'Solving Niger wahala',
+    fundraisingGoal: toAU(20),
+    contractDuration: 200,
+  };
+    interact.projectInfo = pInfo
+    console.log(`Project details ${pInfo}`);
+    interact.reportReady = async () => {
+      console.log("Published project information")
+  };
+
+////
+
+
+  } else {
+    interact.sponsor = async (projectInfo) => {
+      console.log(projectInfo);
+      const sponsor = { contribute: false, amt: 0 };
+      const confirm = await ask(`Do you agree to sponsor?`, yesno);
+      if (confirm) {
+        sponsor.contribute = confirm;
+      } // todo: else statement that reports cancellation
+      return sponsor;
+    };
+  };
+
+  let tok = null;
+    const showBalance = async () => {
+      console.log(`Checking ${tok} balance:`);
+      console.log(`${tok} balance: ${fmt(await stdlib.balanceOf(acc, tok))}`);
+    };
+
+  if (!isProjectOnwer) {
+    interact.reportPayment = async (fund) => {
+      console.log(`You paid ${toSU(fund)} for the project...`)
+    };
+    interact.reportTransfer = async (fund) => {
+      console.log(`Funds transfered`)
+    };
+
+    interact.reportTokenMinted = async (_tok, cmd) => {
       const tok = _tok;
-      const acceptToken = async () => acc.tokenAccept(tok);
-      console.log(`Token was minted ${tok}`);
-      acceptToken();
-      console.log("token accepted");
-    },
-    didTransfer: (did, _amt) => {
-    // const acc = await stdlib.newTestAccount(iBalance);
-    // const acceptToken = async () => acc.tokenAccept(tok);
-    // acceptToken();
-      if ( did ) {
-        amt = _amt;
-        console.log(`${role}: Received transfer of ${toSU(amt)}`);
-      }
-      consol.log(`Token transfered ${amt}`)},
-      ///////
-      // tok = _tok;
-      // console.log(`${me}: The token is: ${tok}`);
-      // await showBalance();
-      // // console.log(`${me}: The token computed metadata is:`, cmd);
+      console.log(`The token is: ${tok}`);
+      await showBalance();
+      // console.log(`${me}: The token computed metadata is:`, cmd);
       // const omd = await acc.tokenMetadata(tok);
-      // // console.log(`${me}: The token on-chain metadata is:`, omd);
+      // console.log(`${me}: The token on-chain metadata is:`, omd);
       // for ( const f in cmd ) {
       //   assertEq(cmd[f], omd[f]);
       // }
-      // console.log(`${me}: Opt-in to ${tok}:`);
-      // await acc.tokenAccept(tok);
+      console.log(`Opt-in to ${tok}:`);
+      await acc.tokenAccept(tok);
+      await showBalance();
+  };
+  interact.didTransfer = async (did, _amt) => {
+    if ( did ) {
+     const amt = _amt;
+      console.log(`Received transfer of ${fmt(amt)} for ${tok}`);
+    }
+    await showBalance();
+    // This next line is weird.
+    // console.log(`${me}: Doing transfer for ${tok}`);
+    // await stdlib.transfer(acc, other, amt, tok);
+    // await showBalance();
+  };
+  interact.programEnded = () => {
+    console.log("Program ended")
+  };
+} else {
+    interact.reportPayment = async (fund) => {
+    console.log(`Project Funded with ${fund}`)
+    };
+    interact.reportTransfer = async (fund) => {
+      console.log(`Funds transfered`)
+    };
+    interact.getParams = () => ({
+      name: `Gil`, symbol: `GIL`,
+      url: `https://tinyurl.com/4nd2faer`,
+      metadata: `It's shiny!`,
+      supply: stdlib.parseCurrency(1000),
+      amt: stdlib.parseCurrency(10),
+    });
+
+    // interact.didTransfer = async ()
+    
+
+    interact.reportTokenMinted = async (_tok, cmd) => {
+      const tok = _tok;
+      console.log(`The token is: ${tok}`);
+      await showBalance();
+      // console.log(`${me}: The token computed metadata is:`, cmd);
+      const omd = await acc.tokenMetadata(tok);
+      // console.log(`${me}: The token on-chain metadata is:`, omd);
+      // for ( const f in cmd ) {
+      //   assertEq(cmd[f], omd[f]);
+      // }
+      console.log(`Opt-in to ${tok}:`);
+      await acc.tokenAccept(tok);
+      await showBalance();
+    };
+    interact.didTransfer = async (did, _amt) => {
+      if ( did ) {
+        const amt = _amt;
+        console.log(`Received transfer of ${fmt(amt)} for ${tok}`);
+      }
+      await showBalance();
+      // This next line is weird.
+      // console.log(`${me}: Doing transfer for ${tok}`);
+      // await stdlib.transfer(acc, other, amt, tok);
       // await showBalance();
-    programEnded: () => {console.log("Program ended")},
-  });
-
-  // SELLER
-  if (role === 'projectOwner') {
-    const acc = await stdlib.newTestAccount(iBalance);
-    const acceptToken = async () => acc.tokenAccept(tok);
-    acceptToken();
-    const projectOwnerInteract = {
-      ...commonInteract(role),
-      projectInfo: {
-        projectName: 'Project Sponsorship Project',
-        projectDetails: 'Solving Niger wahala',
-        fundraisingGoal: toAU(20),
-        contractDuration: 200,
-      },
-      reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); },
-      getParams: () => ({
-        name: `Gil`, symbol: `GIL`,
-        url: `https://tinyurl.com/4nd2faer`,
-        metadata: `It's shiny!`,
-        supply: stdlib.parseCurrency(1000),
-        amt: stdlib.parseCurrency(10),
-      }),
-      
-      // reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
-
-    // const acc = await stdlib.newTestAccount(iBalance);
-    await showBalance(acc);
-    const ctc = acc.contract(backend);
-    await backend.ProjectOwner(ctc, projectOwnerInteract);
-    await showBalance(acc);
-  }
-
-  // BUYER
-  else {
-    const sponsorInteract = {
-      ...commonInteract(role),
-      sponsor: async (projectInfo) => {
-        console.log(projectInfo);
-        const sponsor = { contribute: false, amt: 0 };
-        const confirm = await ask(`Do you agree to sponsor?`, yesno);
-        if (confirm) {
-          // sponsor.amt = await ask(`Do you agree to sponsor?`, yesno);
-          sponsor.contribute = confirm;
-        }
-        return sponsor;
-      },
+    interact.programEnded = () => {
+      console.log("Program ended")
     };
+  };
 
-    const acc = await stdlib.newTestAccount(iBalance);
-    const info = await ask('Paste contract info:', (s) => JSON.parse(s));
-    const ctc = acc.contract(backend, info);
-    //console.log('BEGIN VIEW SECTION');
-    //const sellerInfo = await ctc.views.Main.sellerInfo();
-    //sellerInfo[1].products.forEach((p, i) => {
-    //  console.log(`${i + 1}. ${p.name} at ${toSU(p.price)} ${suStr} per unit (${p.unit}).`);
-    //});
-    //console.log('END VIEW SECTION');
-    await showBalance(acc);
-    await ctc.p.Sponsor(sponsorInteract);
-    await showBalance(acc);
-  }
+
+
+  const part = isProjectOnwer ? ctc.p.ProjectOwner : ctc.p.Sponsor;
+  await part(interact);
+
+  const after = await getBalance();
+  console.log(`Your balance is now ${after}`);
 
   done();
 })();
