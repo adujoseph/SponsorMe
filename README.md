@@ -20,6 +20,7 @@ React Home Page:
 ![Home Page](./sponsor/src/assets/homePage.png)
 
 Interactive test:
+
 ![Home Page](./sponsor/src/assets/terminalTest.png)
 
 Link to tutorial: 
