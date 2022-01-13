@@ -16,7 +16,11 @@ By [Joseph](https://github.com/adujoseph) and [David](https://github.com/onyedik
 
 Picture Speaks:
 
+React Home Page:
 ![Home Page](./sponsor/src/assets/homePage.png)
+
+Interactive test:
+![Home Page](./sponsor/src/assets/terminalTest.png)
 
 Link to tutorial: 
 
