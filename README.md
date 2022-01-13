@@ -21,7 +21,7 @@ React Home Page:
 
 Interactive test:
 
-![Home Page](./sponsor/src/assets/terminalTest.png)
+![Interactive test](./sponsor/src/assets/terminalTest.png)
 
 Link to tutorial: 
 
