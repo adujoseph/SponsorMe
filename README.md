@@ -10,7 +10,7 @@ $ yarn install
 $ the yarn start
 ```
 
-By [Joseph]https://github.com/adujoseph/ and [David]https://github.com/onyedikachi-david
+By [Joseph](https://github.com/adujoseph) and [David](https://github.com/onyedikachi-david)
 
 Link to tutorial: 
 
