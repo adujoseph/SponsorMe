@@ -253,7 +253,7 @@ const Home = () => {
                     <Form.Label>Project Name</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Project Name"
+                      placeholder="NFT Market Place"
                       onChange={e => setName(e.target.value)}
                     />
                   </Form.Group>
