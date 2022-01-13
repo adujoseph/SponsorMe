@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import * as backend from "../../build/index.main.mjs";
+import * as backend from "./contracts/build/index.main.mjs";
 import { loadStdlib } from "@reach-sh/stdlib";
 import MyAlgoConnect from "@reach-sh/stdlib/ALGO_MyAlgoConnect";
+// import ALGO_AlgoSigner from "@reach-sh/stdlib/ALGO_AlgoSigner"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
@@ -9,15 +10,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
-import Error from "../../assets/winner.png";
+import Error from "./assets/winner.png";
+
 
 const reach = loadStdlib("ALGO");
 reach.setWalletFallback(
   reach.walletFallback({
-    providerEnv: "LocalHost",
+    providerEnv: "TestNet",
     MyAlgoConnect,
   })
 );
+
 
 const { standardUnit } = reach;
 console.log(standardUnit, "starter", reach);
@@ -35,6 +38,8 @@ const Home = () => {
   const [view, setView] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [contractId, setContractId] = useState("");
+  const [projectDetails, setProjectDetails] = useState("");
+  const [sponsor, setSponsor] = useState(false);
 
   let ctcPO = null;
   let ctcS = null;
@@ -106,6 +111,9 @@ const Home = () => {
     // );
     // return toSU(await reach.balanceOf(acc));
   };
+  const confirmSponsor = async () => {
+
+  }
 
   const commonInteract = role => ({
     reportPayment: payment =>
@@ -113,12 +121,13 @@ const Home = () => {
         `${role === "sponsor" ? "You" : "The sponsor"} paid ${toSU(
           payment
         )} ${suStr} to the contract.`
+        // Todo: Add a useState to show payment
       ),
     reportTransfer: payment =>
       console.log(
         `The contract paid ${toSU(payment)} ${suStr} to ${
           role === "projectOwner" ? "you" : "the Project Owner"
-        }.`
+        }.` // Todo: Add a useState to show transfer of payment
       ),
     reportExit: () => {
       console.log("Exiting contract");
@@ -126,21 +135,27 @@ const Home = () => {
     reportCancellation: () => {
       console.log(
         `${role === "sponsor" ? "You" : "The Sponsor"} cancelled sponsorship.`
-      );
+      ); // Todo: Add a useState to show  cancelation of payment
     },
     reportTokenMinted: minted => {
       console.log(`Token was minted ${minted}`);
+      // Todo: Add a useState to show toke minted
     },
-    // didTransfer: (did, amt) => {
-    //   if (did) {
-    //     amt = _amt;
-    //     console.log(`${role}: Received transfer of ${toSU(amt)}`);
-    //   }
-    //   console.log(`Token transfered ${amt}`);
-    // },
+    didTransfer: (did, _amt) => {
+      if (did) {
+        let amt = _amt;
+        console.log(`Received transfer of ${toSU(amt)}`);
+        // Todo: Add a useState to show amount of token transfered
+      }
+      // console.log(`Token transfered ${amt}`);
+    },
     programEnded: () => {
       console.log("Program ended");
-      setView("done");
+      setView("done"); // Just as is being done here
+    },
+    showToken: (token) => {
+      console.log(`Token minted: ${token}`);
+      // Todo: Add a useState to show token minted.
     },
   });
 
@@ -160,7 +175,7 @@ const Home = () => {
         setContractInfo(info);
       },
       getParams: () => ({
-        name: `Gil`,
+        name: `Sponsor`,
         symbol: `GIL`,
         url: `https://tinyurl.com/4nd2faer`,
         metadata: `It's shiny!`,
@@ -169,6 +184,8 @@ const Home = () => {
       }),
       // reportReady: async () => { console.log(`Contract info: ${JSON.stringify(await ctc.getInfo())}`); }
     };
+    setProjectDetails(projectOwnerInteract.projectInfo);
+
 
     const acc = await reach.getDefaultAccount();
     if (await reach.canFundFromFaucet()) {
@@ -183,7 +200,18 @@ const Home = () => {
   const attachProject = async () => {
     const sponsorInteract = {
       ...commonInteract("sponsor"),
-      sponsor: confirm,
+      // sponsor: confirm,
+      // Todo: check how to set this to a state
+      sponsor: async (projectInfo) => {
+        // Todo: Add a useState to show project info.
+        console.log(projectInfo);
+        const sponsor = { contribute: true, amt: projectInfo.amount }; // how to get the amount from the project info
+        // const confirm = await confirmSponsor(); // set a view here to show a dialogue.
+        // if (confirm) {
+        //   sponsor.contribute = confirm;
+        // } 
+        return sponsor;
+      },
     };
 
     const acc = await reach.getDefaultAccount();
@@ -208,6 +236,7 @@ const Home = () => {
   };
 
   const handleSponsor = () => {
+    // {projectDetails};
     handleShow();
   };
 
@@ -308,7 +337,7 @@ const Home = () => {
               <h6>
                 Your contract with ID: {contractInfo ? contractInfo : ""} has
                 been deployed and await response from a sponsor
-              </h6>
+              </h6> // Todo: do the same here for as in contractInfo, but for details of everything - like a log or something, check that "market tutorial"
             ) : (
               <></>
             )}
@@ -343,6 +372,8 @@ const Home = () => {
                           />
                         </Form.Group>
                       </Form>
+                      // Todo: output the project details here and a button where the sponsor accepts to pay.
+                      // Or use the modal below:
                       <p>
                         {confirm
                           ? `This project with contract ID: ${contractId} is sponsored by you, congratulations!`
@@ -354,7 +385,9 @@ const Home = () => {
                     <Button variant="danger" onClick={() => setView("")}>
                       Go Back
                     </Button>
-                    <Button variant="primary" onClick={handleSponsor}>
+                    <Button variant="primary" onClick={() => {
+                      setSponsor(true)
+                      handleSponsor()}}>
                       Sponsor
                     </Button>
                   </Row>
@@ -370,6 +403,7 @@ const Home = () => {
           </Modal.Header>
           <Modal.Body>
             <p>Are you sure you want to sponsor this project?</p>
+            <p>Project Details: {projectDetails}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>
@@ -453,8 +487,9 @@ const Home = () => {
                 </h5>
                 <div>
                   <Row>
+                    
                     <Button onClick={getSponsorship}>Get Sponsorship</Button>{" "}
-                    <span className="home--divider">| </span>
+                    <span className="home--divider"> | </span>
                     <Button onClick={beASponsor}>Be a Sponsor</Button>
                   </Row>
                 </div>
@@ -478,7 +513,8 @@ const Home = () => {
                 1 million Algorand with ease. The journey to fulfil your dreams
                 starts here
               </p>
-              <Button onClick={handleShow}>Get Started</Button>
+              <Button onClick={getSponsorship}>Get Sponsorship</Button>{" "}
+
             </Col>
             <Col>
               <h5 className="display-6">Be a Sponsors</h5>
@@ -488,7 +524,8 @@ const Home = () => {
                 something unique and something that will change the world. Don't
                 hesistate, get started now!
               </p>
-              <Button>Sponsor Now</Button>
+              <Button onClick={beASponsor}>Be a Sponsor</Button>
+
             </Col>
           </Row>
         </div> */}

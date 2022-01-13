@@ -1,9 +1,10 @@
+/* eslint-disable*/
 "reach 0.1";
 const projectName = Bytes(28);
 const projectDetails = Bytes(28);
 const fundraisingGoal = UInt;
-// const contractDuration = UInt;
-// const share = UInt;
+const contractDuration = UInt;
+const share = UInt;
 
 const commonInteract = {
   reportPayment: Fun([UInt], Null),
@@ -13,6 +14,7 @@ const commonInteract = {
   reportTokenMinted: Fun(true, Null),
   didTransfer: Fun([Bool, UInt], Null),
   programEnded: Fun([], Null),
+  showToken: Fun([Token], Null),
 };
 
 const projectOwnerInteract = {
@@ -21,8 +23,8 @@ const projectOwnerInteract = {
     projectName: projectName,
     projectDetails: projectDetails,
     fundraisingGoal: fundraisingGoal,
-    // contractDuration: contractDuration,
-    // share: share,
+    contractDuration: contractDuration,
+    share: share,
   }),
   reportReady: Fun([], Null),
   getParams: Fun(
@@ -47,8 +49,8 @@ const sponsorInteract = {
         projectName: projectName,
         projectDetails: projectDetails,
         fundraisingGoal: fundraisingGoal,
-        // contractDuration: contractDuration,
-        // share: share,
+        contractDuration: contractDuration,
+        share: share,
       }),
     ],
     Object({ contribute: Bool, amt: UInt })
@@ -59,7 +61,7 @@ const sponsorInteract = {
 export const main = Reach.App(() => {
   const PO = Participant("ProjectOwner", projectOwnerInteract);
   const S = Participant("Sponsor", sponsorInteract);
-  deploy(); // deploy function takes you to the Step mode
+  init(); // deploy function takes you to the Step mode
 
   PO.only(() => {
     const projectInfo = declassify(interact.projectInfo);
@@ -116,7 +118,13 @@ export const main = Reach.App(() => {
   S.publish();
   S.interact.reportTokenMinted(tok1, md1);
   commit();
-  // Todo: Add if statement for gradual release of funds...
+ 
+  
+  // Todo: Add statement for gradual release of funds...
+  
+  
+  // const [contractDuration, ]
+
   const doTransfer1 = (who, tokX) => {
     if (who == PO && balance(tokX) >= (40 * supply) / 100) {
       transfer((40 * supply) / 100, tokX).to(who);
@@ -131,9 +139,11 @@ export const main = Reach.App(() => {
 
   S.publish();
   doTransfer1(S, tok1);
+  S.interact.showToken(tok1);
   commit();
   PO.publish();
   doTransfer1(PO, tok1);
+  PO.interact.showToken(tok1);
   commit();
 
   S.publish();

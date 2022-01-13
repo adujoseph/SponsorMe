@@ -1,26 +1,25 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./index.css";
+import AppNavbar from "./AppNavbar";
+import Home from "./Home";
+import About from "./About";
+import Footer from "./Footer";
+import PageError from "./PageError";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import AppNavbar from "./components/AppNavbar";
-import Home from "./components/Home/index";
-import About from "./components/About";
-import Footer from "./components/Footer";
-import PageError from "./components/PageError";
-
-const App = () => {
+function App() {
   return (
     <Router>
-      <AppNavbar />
-      <div className="minHeight">
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <Route component={PageError} />
-        </Switch>
-      </div>
-      <Footer />
-    </Router>
+    <AppNavbar />
+    <div className="minHeight">
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/about" component={About} />
+        <Route component={PageError} />
+      </Switch>
+    </div>
+    <Footer />
+  </Router>
   );
-};
+}
 
 export default App;
