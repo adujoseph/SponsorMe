@@ -1,7 +1,7 @@
 # SponsorMe
 
 A Blockchain Project built during the Umoja bounty hack.
-With [Reach lang](https://github.com/reach-sh/reach-lang) and react
+With [Reach lang](https://github.com/reach-sh/reach-lang) - the domain-specific language for trustworthy DApps used by the Reach platform and react
 
 To run: 
 ```
