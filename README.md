@@ -14,6 +14,10 @@ $ the yarn start
 
 By [Joseph](https://github.com/adujoseph) and [David](https://github.com/onyedikachi-david)
 
+Picture Speaks:
+
+![Home Page](./sponsor/src/assets/homePage.png)
+
 Link to tutorial: 
 
 Link to Demo:
