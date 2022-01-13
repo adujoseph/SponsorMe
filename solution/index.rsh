@@ -31,7 +31,6 @@ const sponsorInteract = {
     [Object({projectName: projectName, projectDetails: projectDetails, fundraisingGoal: fundraisingGoal})],
     Object({ contribute: Bool, amt: UInt })
   ),
-
 };
 
 export const main = Reach.App(() => {
@@ -65,6 +64,7 @@ export const main = Reach.App(() => {
   PO.publish(fund);
 
   commit();
+
 
 
   S.pay(fund);
